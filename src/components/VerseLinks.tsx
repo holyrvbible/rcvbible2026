@@ -10,6 +10,7 @@ import { VrefTooltip } from "./VrefTooltip";
 import { useLocation, useNavigate } from "react-router";
 import { jumpToElement } from "../utils/scrollToElement";
 import { useGlowOnce } from "../utils/useGlowOnce";
+import { useStrings } from "../data/useStrings";
 
 /** Number of verse numbers to put together in one nowrap group. */
 const GROUP_SIZE = 5;
@@ -27,6 +28,7 @@ export const VerseLinks: React.FC<{ abbr: BkAbbr; ch: number }> = ({
   const navigate = useNavigate();
   const { hash } = useLocation();
   const glowOnce = useGlowOnce();
+  const strings = useStrings();
 
   const vnGroups = useMemo(() => {
     const numVerses = BkChapterNumVerses[BkAbbrNum[abbr]][ch - 1] as
@@ -62,7 +64,7 @@ export const VerseLinks: React.FC<{ abbr: BkAbbr; ch: number }> = ({
 
   return (
     <Stack gap={4} align="center">
-      <b>Jump to Verse</b>
+      <b>{strings?.jumpToVerse}</b>
       <div style={{ textAlign: "center" }}>
         {vnGroups?.map((group, index) => (
           <Fragment key={group[0]}>

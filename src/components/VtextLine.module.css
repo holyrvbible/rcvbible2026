@@ -1,19 +1,21 @@
 .vref {
-    display: inline-block;
-    font-weight: 600;
-    color: #44f;
-    border-radius: 8px;
-    padding: 0 6px;
-    margin: 0 0 0 -8px;
-    border: 1px solid transparent;
+  display: inline-block;
+  font-weight: 600;
+  color: #44f;
+  border-radius: 8px;
+  padding: 0 6px;
+  margin: 0 0 0 -8px;
+  border: 1px solid transparent;
 }
 
 .vref.clickable {
-    cursor: pointer;
-    transition: background-color 0.4s ease, border-color 0.4s ease;
+  cursor: pointer;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
 }
 
 .vref.clickable:hover {
-    background-color: rgb(240, 255, 240);
-    border-color: #ddd;
+  background-color: rgb(240, 255, 240);
+  border-color: #ddd;
 }

@@ -5,6 +5,7 @@ import { Fragment } from "react/jsx-runtime";
 import styles from "./ChapterLinks.module.css";
 import type { ReactNode } from "react";
 import { SmoothTooltip } from "./SmoothTooltip";
+import { useStrings } from "../data/useStrings";
 
 const BUTTON_WIDTH = 40;
 
@@ -13,8 +14,10 @@ export const ChapterLinksToggle: React.FC<{
   onToggle: () => void;
   children?: ReactNode;
 }> = ({ ch, onToggle, children }) => {
+  const strings = useStrings();
+
   return (
-    <SmoothTooltip label="Toggle chapter links" position="bottom">
+    <SmoothTooltip label={strings?.toggleChapterLinks ?? ""} position="bottom">
       <LinkButton
         className={styles.toggle}
         to=""

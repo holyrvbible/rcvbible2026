@@ -20,7 +20,7 @@ export const TopBar: React.FC = () => {
     <div className={styles.root}>
       <div className={styles.buttonsGroup}>
         <div className={styles.buttonsGroupInnerWrapper}>
-          <SmoothTooltip label="Zoom out">
+          <SmoothTooltip label={strings?.zoomOut}>
             <div
               className={styles.button}
               role="button"
@@ -30,7 +30,7 @@ export const TopBar: React.FC = () => {
               <IconMinus stroke={2} size={ICON_SIZE} />
             </div>
           </SmoothTooltip>
-          <SmoothTooltip label="Zoom in">
+          <SmoothTooltip label={strings?.zoomIn}>
             <div
               className={styles.button}
               role="button"
@@ -79,7 +79,7 @@ export const TopBar: React.FC = () => {
               中
             </div>
           </SmoothTooltip>
-          <SmoothTooltip label="Toggle bilingual mode">
+          <SmoothTooltip label={strings?.toggleBilingualMode}>
             <div
               className={clsx(styles.button, bilingual && styles.on)}
               role="button"

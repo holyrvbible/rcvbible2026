@@ -2,7 +2,7 @@ export function scrollToTop() {
   // The layout has a top bar which is always visible, so we need to scroll
   // to the top of the <main> tag, and not to the body top (which is always
   // visible).
-  document.getElementsByTagName("main")[0].scrollTop = 0
+  document.getElementsByTagName("main")[0].scrollTop = 0;
 }
 
 export function smoothScrollToElement(id: string) {

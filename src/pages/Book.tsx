@@ -2,6 +2,7 @@ import { PageSpinner } from "../components/PageSpinner";
 import { type BkAbbr } from "../data/bibleMetadata";
 import { useBookData } from "../data/useBookData";
 import { useLocale } from "../data/useLocale";
+import { useStrings } from "../data/useStrings";
 import { useBookNames } from "../data/useBookNames";
 import { BookOutlineLazy } from "../components/BookOutlineLazy";
 import { BookTopBar } from "../components/BookTopBar";
@@ -25,12 +26,13 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const { locale } = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
+  const strings = useStrings();
   const tryGetBkAbbr = useTryGetBkAbbr(bookNames);
 
   const { opened: chLinksOpened, toggle: onToggleChLinksOpened } =
     useChapterLinksOpened();
 
-  if (!bookNames || !bookData) {
+  if (!bookNames || !bookData || !strings) {
     return <PageSpinner />;
   }
 
@@ -50,7 +52,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
         lh={1.2}
         ta="center"
       >
-        <SmoothTooltip label="Back to home">
+        <SmoothTooltip label={strings.backToHome}>
           <LinkButton
             to="/"
             style={{
@@ -72,7 +74,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
       <Group justify="center" fw={500} fs="italic" ff="serif">
         <PrevNextChapterLinks abbr={abbr}>
           <ChapterLinksToggle onToggle={onToggleChLinksOpened}>
-            Overview
+            {strings.overview}
           </ChapterLinksToggle>
         </PrevNextChapterLinks>
       </Group>
@@ -152,7 +154,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
       <Group justify="center" fw={500} fs="italic" ff="serif">
         <PrevNextChapterLinks abbr={abbr}>
           <ChapterLinksToggle onToggle={onToggleChLinksOpened}>
-            {bkNames.full} Overview
+            {bkNames.full} {strings.overview}
           </ChapterLinksToggle>
         </PrevNextChapterLinks>
       </Group>
@@ -177,7 +179,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
             fontStyle: "italic",
           }}
         >
-          Back to Top
+          {strings.backToTop}
         </LinkButton>
       </Center>
 

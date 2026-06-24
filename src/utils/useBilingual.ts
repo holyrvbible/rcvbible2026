@@ -6,5 +6,5 @@ const bilingualAtom = atomWithStorage<boolean>("bilingual", false, undefined, {
 });
 
 export function useBilingual() {
-    return useAtom(bilingualAtom);
+  return useAtom(bilingualAtom);
 }

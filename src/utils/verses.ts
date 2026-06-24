@@ -369,5 +369,7 @@ export function parseVerseText(text: string): VtextWithSups {
 }
 
 export function chColon(abbr: BkAbbr, ch: number) {
-  return ch === 1 && BkNumChapters[BkAbbrNum[abbr]] === 1 ? null : `${String(ch)}:`;
+  return ch === 1 && BkNumChapters[BkAbbrNum[abbr]] === 1
+    ? null
+    : `${String(ch)}:`;
 }

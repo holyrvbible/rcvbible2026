@@ -37,7 +37,7 @@ export function supId(vn: string | number, sup: string | number): string {
 
 /** For links within the same page only. */
 export function supLink(vn: string | number, sup: string | number): string {
-  return '#' + supId(vn, sup);
+  return "#" + supId(vn, sup);
 }
 
 export function getPrevBook(abbr: BkAbbr): BkAbbr {

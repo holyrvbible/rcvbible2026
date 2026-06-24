@@ -25,7 +25,7 @@ export const PrevNextBookLinks: React.FC<{
   }, [abbr]);
 
   const iconSize = (size * ICON_SIZE) / PREV_NEXT_BUTTON_SIZE;
-  const xPadding = (size * 8 / PREV_NEXT_BUTTON_SIZE)
+  const xPadding = (size * 8) / PREV_NEXT_BUTTON_SIZE;
 
   return (
     <>

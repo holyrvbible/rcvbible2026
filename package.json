@@ -17,6 +17,7 @@
     "fix": "time eslint --fix",
     "format": "time prettier --write .",
     "tsc": "time tsc -b",
+    "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
     "ci": "pnpm run lint && pnpm run tsc",
     "preview": "vite preview"
   },

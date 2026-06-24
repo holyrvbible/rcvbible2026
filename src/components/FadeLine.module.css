@@ -1,25 +1,29 @@
 .fadeLine {
-    width: 100%;
-    height: 1px;
-    min-height: 1px;
-    max-height: 1px;
-    flex-shrink: 0;
-    background: linear-gradient(to right,
-            transparent,
-            rgb(221, 218, 218) 20%,
-            rgb(221, 218, 218) 80%,
-            transparent);
+  width: 100%;
+  height: 1px;
+  min-height: 1px;
+  max-height: 1px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgb(221, 218, 218) 20%,
+    rgb(221, 218, 218) 80%,
+    transparent
+  );
 }
 
 .verticalFadeLine {
-    width: 1px;
-    min-width: 1px;
-    max-width: 1px;
-    flex-shrink: 0;
-    height: 100%;
-    background: linear-gradient(to bottom,
-            transparent,
-            rgb(221, 218, 218) 30%,
-            rgb(221, 218, 218) 70%,
-            transparent);
+  width: 1px;
+  min-width: 1px;
+  max-width: 1px;
+  flex-shrink: 0;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(221, 218, 218) 30%,
+    rgb(221, 218, 218) 70%,
+    transparent
+  );
 }

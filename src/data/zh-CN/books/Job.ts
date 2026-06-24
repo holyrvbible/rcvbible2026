@@ -1411,7 +1411,7 @@ export const data: BookData = {
         pt: "",
         text: "耶和华对约伯的回答、嘱咐和质问",
         vrefs: "四十1～14",
-        parens: 1
+        parens: 1,
       },
     ],
 

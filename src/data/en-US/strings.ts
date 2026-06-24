@@ -15,6 +15,16 @@ export const strings = {
   otherEpistles: "Other Epistles",
   secondComingOfChrist: "The Second Coming of Christ",
   versionText: "2026 Version",
+  overview: "Overview",
+  backToTop: "Back to Top",
+  jumpToVerse: "Jump to Verse",
+  showAllNotes: "Show All Notes",
+  zoomIn: "Zoom in",
+  zoomOut: "Zoom out",
+  toggleBilingualMode: "Toggle bilingual mode",
+  backToOverview: "Back to overview",
+  toggleChapterLinks: "Toggle chapter links",
+  backToHome: "Back to home",
 } as const;
 
 // Use the English translation to define the i18n type.

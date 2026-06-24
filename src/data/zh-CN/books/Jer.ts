@@ -2592,7 +2592,7 @@ export const data: BookData = {
         pt: "",
         text: "耶和华应许以色列必得复兴",
         vrefs: "二三3～8",
-        parens: 1
+        parens: 1,
       },
     ],
 
@@ -2849,7 +2849,7 @@ export const data: BookData = {
         pt: "",
         text: "安慰以色列的话",
         vrefs: "四六27～28",
-        parens: 1
+        parens: 1,
       },
     ],
 

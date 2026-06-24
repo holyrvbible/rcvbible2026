@@ -43,7 +43,9 @@ export const data: BookData = {
       { lv: 1, pt: "壹", text: "引言", vrefs: "1～3" },
       { lv: 2, pt: "一", text: "在真实中为着真理而爱", vrefs: "1～2" },
     ],
-    "1:3": [{ lv: 2, pt: "二", text: "在真理与爱中的恩典、怜悯与平安", vrefs: "3" }],
+    "1:3": [
+      { lv: 2, pt: "二", text: "在真理与爱中的恩典、怜悯与平安", vrefs: "3" },
+    ],
     "1:4": [
       { lv: 1, pt: "贰", text: "在真理与爱中的行事", vrefs: "4～6" },
       { lv: 2, pt: "一", text: "在真理中", vrefs: "4" },
@@ -53,7 +55,9 @@ export const data: BookData = {
       { lv: 1, pt: "参", text: "不要有分于异端", vrefs: "7～11" },
       { lv: 2, pt: "一", text: "异端者", vrefs: "7～9" },
     ],
-    "1:10": [{ lv: 2, pt: "二", text: "不要有分于异端的工作", vrefs: "10～11" }],
+    "1:10": [
+      { lv: 2, pt: "二", text: "不要有分于异端的工作", vrefs: "10～11" },
+    ],
     "1:12": [
       { lv: 1, pt: "肆", text: "结语", vrefs: "12～13" },
       { lv: 2, pt: "一", text: "为更多的喜乐，盼有更亲密的交通", vrefs: "12" },

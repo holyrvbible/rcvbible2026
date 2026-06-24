@@ -11,17 +11,11 @@ import {
 } from "react";
 import { PageSpinner } from "../components/PageSpinner";
 import { useLocale } from "../data/useLocale";
+import { useStrings, type StringsResult } from "../data/useStrings";
 import { useBookData } from "../data/useBookData";
 import { useBookNames } from "../data/useBookNames";
 import { VerseLinks } from "../components/VerseLinks";
-import {
-  Center,
-  Checkbox,
-  Collapse,
-  Group,
-  Space,
-  Stack,
-} from "@mantine/core";
+import { Center, Checkbox, Collapse, Group, Space, Stack } from "@mantine/core";
 import { BookTopBar } from "../components/BookTopBar";
 import { FadeLine } from "../components/FadeLine";
 import { useShowAllNotes } from "../utils/useShowAllNotes";
@@ -59,6 +53,7 @@ const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const { locale } = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
+  const strings = useStrings();
 
   const [showAllNotes, setShowAllNotes] = useShowAllNotes();
   const [showNotesRefs, setShowNotesRefs] = useState<Set<string>>(
@@ -107,7 +102,7 @@ const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
     );
   }
 
-  if (typeof ch !== "number" || !bookNames || !bookData) {
+  if (typeof ch !== "number" || !bookNames || !bookData || !strings) {
     return <PageSpinner />;
   }
 
@@ -117,6 +112,7 @@ const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
       ch={ch}
       bookNames={bookNames}
       bookData={bookData}
+      strings={strings}
       showAllNotes={showAllNotes}
       setShowAllNotes={setShowAllNotes}
       showNotesRefs={showNotesRefs}
@@ -130,6 +126,7 @@ const ReadyAndValid: React.FC<{
   ch: number;
   bookNames: LocaleBookNames;
   bookData: BookData;
+  strings: StringsResult;
   showAllNotes: boolean;
   setShowAllNotes: Dispatch<SetStateAction<boolean>>;
   showNotesRefs: Set<string>;
@@ -139,6 +136,7 @@ const ReadyAndValid: React.FC<{
   ch,
   bookNames,
   bookData,
+  strings,
   showAllNotes,
   setShowAllNotes,
   showNotesRefs,
@@ -237,7 +235,7 @@ const ReadyAndValid: React.FC<{
       <BookTopBar abbr={abbr} />
 
       <Group justify="center" fz="180%" fw={500} ff="serif" lh={1.2}>
-        <SmoothTooltip label="Back to overview">
+        <SmoothTooltip label={strings.backToOverview}>
           <LinkButton
             to={`/${abbr}`}
             style={{
@@ -304,7 +302,7 @@ const ReadyAndValid: React.FC<{
               },
             }}
           />
-          &nbsp; Show All Notes
+          &nbsp; {strings.showAllNotes}
         </LinkButton>
       </Center>
 
@@ -451,7 +449,7 @@ const ReadyAndValid: React.FC<{
             fontStyle: "italic",
           }}
         >
-          Back to Top
+          {strings.backToTop}
         </LinkButton>
       </Center>
 

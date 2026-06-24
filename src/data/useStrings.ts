@@ -9,7 +9,7 @@ export type StringsResult = StringsData & {
   get: (key: keyof StringsData, ...args: (string | number)[]) => string;
 };
 
-export function useStrings() {
+export function useStrings(): StringsResult | null {
   const { locale } = useLocale();
   const [strings, setStrings] = useState<StringsData>();
 
