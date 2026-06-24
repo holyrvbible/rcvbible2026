@@ -104,15 +104,17 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
             const key = index + 1;
             return (
               <div key={key}>
-                <b
-                  style={{
-                    color: "#333",
-                    display: "inline-block",
-                    marginRight: 5,
-                  }}
-                >
-                  {header}:
-                </b>
+                {!!header && (
+                  <b
+                    style={{
+                      color: "#333",
+                      display: "inline-block",
+                      marginRight: 5,
+                    }}
+                  >
+                    {header}:
+                  </b>
+                )}
                 <CodedVrefLinks text={replaceHtmlEntities(text)} />
               </div>
             );

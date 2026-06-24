@@ -3,13 +3,13 @@ import type { BookData } from "../../booksTypes";
 export const data: BookData = {
   bigTitle: "罗马书",
   intro: [
-    ["", "著者: 使徒保罗。({Rom1:1|一1})"],
-    ["", "著时: 约在主后六十年，保罗第三次出外尽职时。"],
+    ["著者", "使徒保罗。({Rom1:1|一1})"],
+    ["著时", "约在主后六十年，保罗第三次出外尽职时。"],
     [
-      "",
-      "著地: 哥林多。({Rom15:25|罗十五25}～{Rom15:32|32}，{Act19:21|徒十九21}，{Act20:1|二十1}～{Act20:3|3})",
+      "著地",
+      "哥林多。({Rom15:25|罗十五25}～{Rom15:32|32}，{Act19:21|徒十九21}，{Act20:1|二十1}～{Act20:3|3})",
     ],
-    ["", "受者: 在罗马的圣徒。({Rom1:7|一7})"],
+    ["受者", "在罗马的圣徒。({Rom1:7|一7})"],
   ],
   subject:
     "The Gospel of God&mdash;<br>To Make Sinners Sons of God<br>to Constitute the Body of Christ,<br>Which Is Expressed as the Local Churches",

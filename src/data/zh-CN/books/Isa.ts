@@ -4,14 +4,14 @@ export const data: BookData = {
   bigTitle: "以赛亚书",
   intro: [
     [
-      "",
-      "著者: Isaiah ({Isa1:1|一1}; {Mat3:3|Matt. 3:3}; {Joh12:39|John 12:39}-{Joh12:41|41}; {Rom15:12|Rom. 15:12}).",
+      "著者",
+      "以赛亚（{Isa1:1|一1}; {Mat3:3|太三3}; {Joh12:39|约十二39}-{Joh12:41|41}; {Rom15:12|罗十五12}）。",
     ],
-    ["", "著时: The eighth century B.C."],
-    ["", "著地: Jerusalem."],
+    ["著时", "主前第八世纪。"],
+    ["著地", "耶路撒冷。"],
     [
-      "Time Period Covered",
-      "About sixty-four years, from around 760 B.C., a few years before the death of King Uzziah (Azariah), to about 696 B.C., a few years after the death of Hezekiah ({Isa6:1|6:1}; {Isa1:1|一1})",
+      "涵盖时段",
+      "本书涵盖时段大约六十四年，从主前七六零年，即乌西雅王过世前几年，到主前大约六九六年，即希西家王过世后几年（{Isa6:1|六1}; {Isa1:1|一1}）。"
     ],
   ],
   subject:
