@@ -21,7 +21,6 @@ import {
   Group,
   Space,
   Stack,
-  Tooltip,
 } from "@mantine/core";
 import { BookTopBar } from "../components/BookTopBar";
 import { FadeLine } from "../components/FadeLine";
@@ -48,6 +47,7 @@ import { NotesRefsBlock } from "../components/NotesRefsBlock";
 import { OutlinesBox } from "../components/OutlinesBox";
 import { useBilingual } from "../utils/useBilingual";
 import type { LocaleBookNames } from "../data/localeTypes";
+import { SmoothTooltip } from "../components/SmoothTooltip";
 
 const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const params = useParams();
@@ -237,7 +237,7 @@ const ReadyAndValid: React.FC<{
       <BookTopBar abbr={abbr} />
 
       <Group justify="center" fz="180%" fw={500} ff="serif" lh={1.2}>
-        <Tooltip label="Back to overview">
+        <SmoothTooltip label="Back to overview">
           <LinkButton
             to={`/${abbr}`}
             style={{
@@ -248,7 +248,7 @@ const ReadyAndValid: React.FC<{
           >
             {bkNames.long}
           </LinkButton>
-        </Tooltip>
+        </SmoothTooltip>
       </Group>
 
       <Space h={8} />

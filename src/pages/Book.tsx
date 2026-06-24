@@ -5,7 +5,7 @@ import { useLocale } from "../data/useLocale";
 import { useBookNames } from "../data/useBookNames";
 import { BookOutlineLazy } from "../components/BookOutlineLazy";
 import { BookTopBar } from "../components/BookTopBar";
-import { Center, Collapse, Group, Space, Stack, Tooltip } from "@mantine/core";
+import { Center, Collapse, Group, Space, Stack } from "@mantine/core";
 import { FadeLine } from "../components/FadeLine";
 import styles from "./Book.module.css";
 import { CodedVrefLinks } from "../components/CodedVrefLinks";
@@ -19,6 +19,7 @@ import {
 import { useTryGetBkAbbr } from "../data/useTryGetBkAbbr";
 import { LinkButton } from "../components/LinkButton";
 import { scrollToTop } from "../utils/scrollToElement";
+import { SmoothTooltip } from "../components/SmoothTooltip";
 
 const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const { locale } = useLocale();
@@ -49,7 +50,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
         lh={1.2}
         ta="center"
       >
-        <Tooltip label="Back to home">
+        <SmoothTooltip label="Back to home">
           <LinkButton
             to="/"
             style={{
@@ -63,7 +64,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
               dangerouslySetInnerHTML={{ __html: bookData.bigTitle }}
             />
           </LinkButton>
-        </Tooltip>
+        </SmoothTooltip>
       </Group>
 
       <Space h={8} />

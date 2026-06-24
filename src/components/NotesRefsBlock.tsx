@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import type { NotesRefsItem } from "../data/booksTypes";
 import { supId } from "../utils/links";
-import { Collapse, Space, Tooltip } from "@mantine/core";
+import { Collapse, Space } from "@mantine/core";
 import { chColon, replaceHtmlEntities } from "../utils/verses";
 import { CodedVrefLinks } from "./CodedVrefLinks";
 import { LinkButton } from "./LinkButton";
@@ -9,6 +9,7 @@ import { ProperVrefLinks } from "./ProperVrefLinks";
 import type { TryGetBkAbbrFn } from "../data/useTryGetBkAbbr";
 import type { SetStateAction } from "jotai";
 import { type BkAbbr } from "../data/bibleMetadata";
+import { SmoothTooltip } from "./SmoothTooltip";
 
 export const NotesRefsBlock: React.FC<{
   abbr: BkAbbr;
@@ -65,7 +66,7 @@ export const NotesRefsBlock: React.FC<{
                 {moreIds.map((id) => (
                   <span key={id} id={id} />
                 ))}
-                <Tooltip label="Hide this note">
+                <SmoothTooltip label="Hide this note">
                   <LinkButton
                     to=""
                     onClick={() => {
@@ -85,7 +86,7 @@ export const NotesRefsBlock: React.FC<{
                     {vn}
                     <sup>{sup}</sup>
                   </LinkButton>
-                </Tooltip>
+                </SmoothTooltip>
 
                 {word ? (
                   <b

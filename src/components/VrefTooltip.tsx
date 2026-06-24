@@ -3,10 +3,11 @@ import { getVerseHtmlNoSups, type Vref } from "../utils/verses";
 import { useLocale } from "../data/useLocale";
 import { useBookData } from "../data/useBookData";
 import { BkOneChapterOnly, type BkAbbr } from "../data/bibleMetadata";
-import { Tooltip, type TooltipProps } from "@mantine/core";
+import { type TooltipProps } from "@mantine/core";
 import { useBookNames } from "../data/useBookNames";
 import type { LocaleBookNames } from "../data/localeTypes";
 import type { BookData } from "../data/booksTypes";
+import { SmoothTooltip } from "./SmoothTooltip";
 
 // The label is always provided by this component.
 export type TooltipPropsNoLabel = Omit<TooltipProps, "label">;
@@ -83,7 +84,7 @@ const VrefTooltip3: React.FC<
   }
 
   return (
-    <Tooltip
+    <SmoothTooltip
       label={
         <>
           <b>

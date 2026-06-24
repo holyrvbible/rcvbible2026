@@ -1,9 +1,10 @@
 import { BkAbbr, BkAbbrNum, BkNumChapters } from "../data/bibleMetadata";
-import { Collapse, Group, Tooltip } from "@mantine/core";
+import { Collapse, Group } from "@mantine/core";
 import { LinkButton } from "./LinkButton";
 import { Fragment } from "react/jsx-runtime";
 import styles from "./ChapterLinks.module.css";
 import type { ReactNode } from "react";
+import { SmoothTooltip } from "./SmoothTooltip";
 
 const BUTTON_WIDTH = 40;
 
@@ -13,7 +14,7 @@ export const ChapterLinksToggle: React.FC<{
   children?: ReactNode;
 }> = ({ ch, onToggle, children }) => {
   return (
-    <Tooltip label="Toggle chapter links" position="bottom">
+    <SmoothTooltip label="Toggle chapter links" position="bottom">
       <LinkButton
         className={styles.toggle}
         to=""
@@ -28,7 +29,7 @@ export const ChapterLinksToggle: React.FC<{
       >
         {children ?? (ch ? <>Chapter {ch}</> : <>Chapters</>)}
       </LinkButton>
-    </Tooltip>
+    </SmoothTooltip>
   );
 };
 

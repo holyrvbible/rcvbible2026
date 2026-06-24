@@ -6,7 +6,7 @@ import { useLocale } from "../data/useLocale";
 import { useStrings } from "../data/useStrings";
 import { usePageZoom } from "../utils/usePageZoom";
 import { useBilingual } from "../utils/useBilingual";
-import { Tooltip } from "@mantine/core";
+import { SmoothTooltip } from "../components/SmoothTooltip";
 
 const ICON_SIZE = 17;
 
@@ -20,7 +20,7 @@ export const TopBar: React.FC = () => {
     <div className={styles.root}>
       <div className={styles.buttonsGroup}>
         <div className={styles.buttonsGroupInnerWrapper}>
-          <Tooltip label="Zoom out">
+          <SmoothTooltip label="Zoom out">
             <div
               className={styles.button}
               role="button"
@@ -29,8 +29,8 @@ export const TopBar: React.FC = () => {
             >
               <IconMinus stroke={2} size={ICON_SIZE} />
             </div>
-          </Tooltip>
-          <Tooltip label="Zoom in">
+          </SmoothTooltip>
+          <SmoothTooltip label="Zoom in">
             <div
               className={styles.button}
               role="button"
@@ -39,7 +39,7 @@ export const TopBar: React.FC = () => {
             >
               <IconPlus stroke={2} size={ICON_SIZE} />
             </div>
-          </Tooltip>
+          </SmoothTooltip>
           <div className={styles.percent}>{zoomPercent}%</div>
         </div>
       </div>
@@ -55,7 +55,7 @@ export const TopBar: React.FC = () => {
         <div
           className={clsx(styles.buttonsGroupInnerWrapper, styles.rightAlign)}
         >
-          <Tooltip label="Switch to English">
+          <SmoothTooltip label="Switch to English">
             <div
               className={clsx(styles.button, locale === "en-US" && styles.on)}
               role="button"
@@ -66,8 +66,8 @@ export const TopBar: React.FC = () => {
             >
               EN
             </div>
-          </Tooltip>
-          <Tooltip label="使用中文">
+          </SmoothTooltip>
+          <SmoothTooltip label="使用中文">
             <div
               className={clsx(styles.button, locale === "zh-CN" && styles.on)}
               role="button"
@@ -78,8 +78,8 @@ export const TopBar: React.FC = () => {
             >
               中
             </div>
-          </Tooltip>
-          <Tooltip label="Toggle bilingual mode">
+          </SmoothTooltip>
+          <SmoothTooltip label="Toggle bilingual mode">
             <div
               className={clsx(styles.button, bilingual && styles.on)}
               role="button"
@@ -90,7 +90,7 @@ export const TopBar: React.FC = () => {
             >
               <IconLanguage stroke={2} />
             </div>
-          </Tooltip>
+          </SmoothTooltip>
         </div>
       </div>
     </div>
