@@ -132,7 +132,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
       <Space h={17} />
 
       <div style={{ textAlign: "center", fontSize: "110%", opacity: 0.75 }}>
-        <b>Subject of {bkNames.full}</b>
+        <b>{strings.get("subjectOf", bkNames.full)}</b>
         <div dangerouslySetInnerHTML={{ __html: bookData.subject }}></div>
       </div>
 

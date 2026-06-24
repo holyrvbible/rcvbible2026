@@ -12,6 +12,12 @@ import { NotFoundLazy } from "./pages/NotFoundLazy";
 import { BooChapterLazy } from "./pages/BookChapterLazy";
 import { Layout } from "./layout/Layout";
 import { useIsMobile } from "./utils/useIsMobile";
+import { useStrings } from "./data/useStrings";
+
+const SuspenseFallback: React.FC = () => {
+  const strings = useStrings();
+  return strings ? <div>{strings.loading}</div> : <PageSpinner />;
+};
 
 const root = document.getElementById("root");
 
@@ -87,7 +93,7 @@ export const Root: React.FC = () => {
 
   return (
     <StrictMode>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<SuspenseFallback />}>
         <RouterProvider router={router} />
       </Suspense>
     </StrictMode>

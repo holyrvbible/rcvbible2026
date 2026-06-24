@@ -10,6 +10,7 @@ import type { TryGetBkAbbrFn } from "../data/useTryGetBkAbbr";
 import type { SetStateAction } from "jotai";
 import { type BkAbbr } from "../data/bibleMetadata";
 import { SmoothTooltip } from "./SmoothTooltip";
+import { useStrings } from "../data/useStrings";
 
 export const NotesRefsBlock: React.FC<{
   abbr: BkAbbr;
@@ -32,6 +33,7 @@ export const NotesRefsBlock: React.FC<{
   showNotesRefs,
   setShowNotesRefs,
 }) => {
+  const strings = useStrings();
   const anyExpanded =
     showAllNotes ||
     !!notesRefsItems?.some(({ sup }) => {
@@ -66,7 +68,7 @@ export const NotesRefsBlock: React.FC<{
                 {moreIds.map((id) => (
                   <span key={id} id={id} />
                 ))}
-                <SmoothTooltip label="Hide this note">
+                <SmoothTooltip label={strings?.hideThisNote ?? ""}>
                   <LinkButton
                     to=""
                     onClick={() => {

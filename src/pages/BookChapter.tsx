@@ -95,9 +95,17 @@ const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   }, [abbr, chapter, numChapters]);
 
   if (isValid === false) {
+    if (!strings) {
+      return <PageSpinner />;
+    }
+
     return (
       <div>
-        No such chapter {chapter} in {bookNames?.[abbr].full ?? abbr}.
+        {strings.get(
+          "noSuchChapter",
+          chapter ?? "?",
+          bookNames?.[abbr].full ?? abbr,
+        )}
       </div>
     );
   }
@@ -432,7 +440,7 @@ const ReadyAndValid: React.FC<{
 
       <Group justify="center" fw={500} fs="italic" ff="serif">
         <PrevNextChapterLinks abbr={abbr} ch={ch}>
-          {bkNames.full} {ch} of {numChapters}
+          {strings.get("chapterOfTotal", bkNames.full, ch, numChapters)}
         </PrevNextChapterLinks>
       </Group>
 

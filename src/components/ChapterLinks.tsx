@@ -30,7 +30,7 @@ export const ChapterLinksToggle: React.FC<{
           color: "#33f",
         }}
       >
-        {children ?? (ch ? <>Chapter {ch}</> : <>Chapters</>)}
+        {children ?? (ch ? strings?.get("chapter", ch) : strings?.chapters)}
       </LinkButton>
     </SmoothTooltip>
   );

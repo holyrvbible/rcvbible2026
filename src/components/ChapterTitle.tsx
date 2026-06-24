@@ -6,6 +6,7 @@ import { LinkButton } from "./LinkButton";
 import { NotesRefsBlock } from "./NotesRefsBlock";
 import { type TryGetBkAbbrFn } from "../data/useTryGetBkAbbr";
 import { supId } from "../utils/links";
+import { useStrings } from "../data/useStrings";
 
 export const ChapterTitle: React.FC<{
   abbr: BkAbbr;
@@ -26,6 +27,7 @@ export const ChapterTitle: React.FC<{
   showNotesRefs,
   setShowNotesRefs,
 }) => {
+  const strings = useStrings();
   const chTitleWithSups = useMemo(() => {
     const s = bookData.chTitle?.[String(ch)];
     if (!s) return null;
@@ -96,7 +98,7 @@ export const ChapterTitle: React.FC<{
           onClick={onLabelClick}
           style={{ display: "inline-block", color: "#77f", fontWeight: 600 }}
         >
-          Title:
+          {strings?.titleLabel}
         </LinkButton>
         {chTitleWithSups.map((v, index) => {
           const key = index + 1;

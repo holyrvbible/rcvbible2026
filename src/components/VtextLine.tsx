@@ -6,6 +6,7 @@ import { OptionalTooltip } from "./OptionalTooltip";
 import styles from "./VtextLine.module.css";
 import { LinkButton } from "./LinkButton";
 import { Collapse } from "@mantine/core";
+import { useStrings } from "../data/useStrings";
 
 export const VtextLine: React.FC<{
   abbr: BkAbbr;
@@ -34,13 +35,18 @@ export const VtextLine: React.FC<{
   onVrefClick,
   onVtextSupClick,
 }) => {
+  const strings = useStrings();
   const clickable = !!notesRefsItems?.length;
+  const clickLabel =
+    clickable && clickEffect
+      ? clickEffect === "Show"
+        ? strings?.showNotes
+        : strings?.hideNotes
+      : null;
 
   const content = (
     <>
-      <OptionalTooltip
-        label={clickable && clickEffect ? `${clickEffect} notes` : null}
-      >
+      <OptionalTooltip label={clickLabel}>
         <span
           className={clsx(styles.vref, clickable && styles.clickable)}
           tabIndex={0}

@@ -5,6 +5,7 @@ import type { LocaleBookNames } from "../data/localeTypes";
 import { ProperVrefLinks } from "./ProperVrefLinks";
 import type { TryGetBkAbbrFn } from "../data/useTryGetBkAbbr";
 import { parseVref, replaceHtmlEntities } from "../utils/verses";
+import { useStrings } from "../data/useStrings";
 
 const BookOutline: React.FC<{
   abbr: BkAbbr;
@@ -12,10 +13,12 @@ const BookOutline: React.FC<{
   bookData: BookData;
   tryGetBkAbbr: TryGetBkAbbrFn;
 }> = ({ abbr, bookNames, bookData, tryGetBkAbbr }) => {
+  const strings = useStrings();
+
   return (
     <>
       <div style={{ textAlign: "center", fontSize: "110%" }}>
-        <b>Outline of {bookNames[abbr].full}</b>
+        <b>{strings?.get("outlineOf", bookNames[abbr].full)}</b>
       </div>
 
       <Space h={10} />

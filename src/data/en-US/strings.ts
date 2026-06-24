@@ -25,6 +25,20 @@ export const strings = {
   backToOverview: "Back to overview",
   toggleChapterLinks: "Toggle chapter links",
   backToHome: "Back to home",
+  subjectOf: "Subject of {1}",
+  outlineOf: "Outline of {1}",
+  chapter: "Chapter {1}",
+  chapters: "Chapters",
+  showNotes: "Show Notes",
+  hideNotes: "Hide Notes",
+  hideThisNote: "Hide this note",
+  chapterOfTotal: "{1} {2} of {3}",
+  noSuchChapter: "No such chapter {1} in {2}.",
+  titleLabel: "Title:",
+  notFoundLine1: "Sorry we couldn’t find that page, but our",
+  notFoundLine2: "homepage is a great starting point.",
+  takeMeHome: "Take me home",
+  loading: "Loading...",
 } as const;
 
 // Use the English translation to define the i18n type.
