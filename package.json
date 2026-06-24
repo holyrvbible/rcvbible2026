@@ -1,0 +1,66 @@
+{
+  "name": "holyrvbible",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev?": "echo Dev build and serve from source code",
+    "dev": "vite",
+    "build?": "echo Build to dist.",
+    "build": "time tsc -b && time vite build",
+    "copy?": "echo Files in the root dir will be used as the final distribution.",
+    "copy": "cp -rf dist/* .",
+    "serve?": "echo Serve index.html from root dir. Run build and copy first.",
+    "serve": "serve .",
+    "prod": "pnpm run build & pnpm run copy & pnpm run serve",
+    "lint": "time eslint",
+    "fix": "time eslint --fix",
+    "format": "time prettier --write .",
+    "tsc": "time tsc -b",
+    "ci": "pnpm run lint && pnpm run tsc",
+    "preview": "vite preview"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx,css.json}": [
+      "prettier --write .",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@mantine/core": "^9.3.1",
+    "@mantine/hooks": "^9.3.1",
+    "@tabler/icons-react": "^3.44.0",
+    "clsx": "^2.1.1",
+    "jotai": "^2.20.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router": "^7.17.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@eslint/js": "^10.0.1",
+    "@rolldown/plugin-babel": "^0.2.3",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^25",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-dom": "^5.9.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "eslint-plugin-react-x": "^5.9.0",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.4",
+    "serve": "^14.2.6",
+    "typescript": "^6",
+    "typescript-eslint": "^8",
+    "vite": "^8",
+    "vite-plugin-pwa": "^1.3.0"
+  }
+}

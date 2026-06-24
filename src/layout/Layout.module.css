@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+}
+
+.topBar {
+  flex-shrink: 0;
+  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.3);
+  /* Important: Make a top space so that when we jump to a target, the target
+     is not pressed hard to the bottom of the bar. */
+  margin-bottom: 12px;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  width: 100vw;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0 12px 12px;
+}

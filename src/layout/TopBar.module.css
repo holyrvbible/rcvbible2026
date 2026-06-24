@@ -1,0 +1,95 @@
+.root {
+  color: white;
+  background-color: #343a40;
+  font-family: sans-serif;
+  display: grid;
+  height: 42px;
+  grid-template-columns: 110px auto 110px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.buttonsGroup {
+  display: flex;
+}
+
+/* If we don't have this, the right component will overflow past the right edge
+   of the screen. */
+.buttonsGroupInnerWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  width: 120px;
+}
+
+.rightAlign {
+  justify-content: flex-end;
+}
+
+.percent {
+  font-size: 85%;
+  opacity: 0.6;
+  margin-top: 1px;
+}
+
+.title {
+  display: inline-block;
+  color: white;
+  font-size: 90%;
+  padding: 4px 7px;
+  margin-top: 1px;
+  border-radius: 6px;
+  border: 1px solid #343a40;
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.title:hover {
+  color: rgb(223, 223, 244);
+  background-color: #39434a;
+  border-color: #484f55;
+}
+
+:global(.mobile) .longTitle {
+  display: none;
+}
+
+:global(.desktop) .shortTitle {
+  display: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #2b3238;
+  border-radius: 4px;
+  width: 32px;
+  height: 30px;
+  font-size: 80%;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.button:hover {
+  background-color: #545a60;
+  border-color: #57f;
+}
+
+.button.on {
+  color: #eee;
+  border-color: #eee;
+}
+
+.button.on:hover {
+  color: white;
+  border-color: white;
+}
