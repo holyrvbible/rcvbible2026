@@ -54,7 +54,11 @@ export const TopBar: React.FC = () => {
         >
           <SmoothTooltip label="Switch to English">
             <div
-              className={clsx(styles.button, locale === "en-US" && styles.on)}
+              className={clsx(
+                styles.button,
+                styles.textButton,
+                locale === "en-US" && styles.on,
+              )}
               role="button"
               tabIndex={0}
               onClick={() => {
@@ -66,11 +70,19 @@ export const TopBar: React.FC = () => {
           </SmoothTooltip>
           <SmoothTooltip label="使用中文">
             <div
-              className={clsx(styles.button, locale === "zh-CN" && styles.on)}
+              className={clsx(
+                styles.button,
+                styles.textButton,
+                locale === "zh-CN" && styles.on,
+              )}
               role="button"
               tabIndex={0}
               onClick={() => {
                 setLocale("zh-CN");
+              }}
+              style={{
+                paddingLeft: 9,
+                paddingRight: 9,
               }}
             >
               中
@@ -85,7 +97,7 @@ export const TopBar: React.FC = () => {
                 setBilingual((v) => !v);
               }}
             >
-              <IconLanguage stroke={2} />
+              <IconLanguage stroke={2} size={ICON_SIZE} />
             </div>
           </SmoothTooltip>
         </div>

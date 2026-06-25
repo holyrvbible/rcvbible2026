@@ -3,11 +3,10 @@
   background-color: #343a40;
   font-family: sans-serif;
   display: grid;
-  height: 42px;
   grid-template-columns: 110px auto 110px;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
+  padding: 2px 5px;
 }
 
 .buttonsGroup {
@@ -20,7 +19,6 @@
   display: flex;
   gap: 5px;
   align-items: center;
-  width: 120px;
 }
 
 .rightAlign {
@@ -61,14 +59,17 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #2b3238;
   border-radius: 4px;
-  width: 32px;
-  height: 30px;
+  padding: 6px 7px;
   font-size: 80%;
   font-weight: 500;
   cursor: pointer;
   transition:
     background-color 0.4s ease,
     border-color 0.4s ease;
+}
+
+.textButton {
+  padding: 4.5px 6px;
 }
 
 .button:hover {
