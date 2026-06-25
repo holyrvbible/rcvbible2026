@@ -183,7 +183,7 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
         </LinkButton>
       </Center>
 
-      <Space h={100} />
+      <Space h={200} />
     </Stack>
   );
 };

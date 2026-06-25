@@ -4,7 +4,6 @@
   flex-direction: column;
   gap: 12px;
   align-items: center;
-  margin-bottom: 80px;
 }
 
 .title {
@@ -90,5 +89,6 @@
 
 .footer {
   margin-top: 16px;
+  padding-bottom: 200px;
   font-style: italic;
 }
