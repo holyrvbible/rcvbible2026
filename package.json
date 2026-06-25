@@ -12,7 +12,7 @@
     "tsc": "time tsc -b",
     "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
     "ci?": "echo Note that the 'time' command does not exist in the CI shell.",
-    "ci": "eslint",
+    "ci": "eslint && pnpm run build",
     "build?": "echo Build to dist. Note that the 'time' command does not exist in the CI shell.",
     "build": "tsc -b && vite build",
     "preview?": "echo Serve index.html from dist. Run build first.",
