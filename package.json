@@ -18,7 +18,7 @@
     "build": "pnpm run clean && tsc -b && vite build --emptyOutDir",
     "preview?": "echo Serve index.html from dist. Run build first.",
     "preview": "vite preview",
-    "prod": "pnpm run build & pnpm run preview",
+    "prod": "pnpm run build && pnpm run preview",
     "deploy": "pnpm run build && wrangler deploy"
   },
   "lint-staged": {
