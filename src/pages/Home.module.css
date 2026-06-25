@@ -76,7 +76,19 @@
 }
 
 .book {
-  width: 190px;
+  width: 180px;
+  white-space: nowrap;
+}
+
+@media (max-width: 749px) {
+  .bookList {
+    flex-direction: row;
+  }
+
+  .book {
+    width: unset;
+    min-width: 110px;
+  }
 }
 
 .bookLink {
