@@ -45,10 +45,7 @@ export const TopBar: React.FC = () => {
       </div>
       <div>
         <Link className={styles.title} to="/">
-          <span className={styles.longTitle}>{strings?.websiteTitle}</span>
-          <span className={styles.shortTitle}>
-            {strings?.websiteShortTitle}
-          </span>
+          {strings?.websiteShortTitle} 2026
         </Link>
       </div>
       <div className={clsx(styles.buttonsGroup, styles.rightAlign)}>

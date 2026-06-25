@@ -8,6 +8,13 @@
   overflow-x: hidden;
 }
 
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
 .title {
   margin-top: 16px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

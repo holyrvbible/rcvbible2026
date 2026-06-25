@@ -10,6 +10,7 @@ import { FadeLine, VerticalFadeLine } from "../components/FadeLine";
 import { linkTo } from "../utils/links";
 import { LinkButton } from "../components/LinkButton";
 import styles from "./Home.module.css";
+import { Center } from "@mantine/core";
 
 type BookGroups = { name: StringName; books: BkAbbr[] }[];
 
@@ -101,8 +102,10 @@ export const Home: React.FC = () => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.title}>{strings.websiteTitle}</div>
-      <div className={styles.subTitle}>{strings.websiteSubtitle}</div>
+      <div className={styles.titleBox}>
+        <div className={styles.title}>{strings.websiteTitle}</div>
+        <div className={styles.subTitle}>{strings.websiteSubtitle}</div>
+      </div>
 
       <div className={styles.allBooks}>
         <div className={styles.booksStack}>
@@ -132,7 +135,25 @@ export const Home: React.FC = () => {
 
       <FadeLine />
 
-      <div className={styles.footer}>~ {strings.versionText} ~</div>
+      <div className={styles.footer}>
+        <Center>
+          <LinkButton
+            to=""
+            onClick={() => {
+              // Jump to the top of the home root container.
+              document.getElementsByClassName(styles.root)[0].scrollTop = 0;
+            }}
+            style={{
+              opacity: 0.5,
+              fontSize: "95%",
+              fontFamily: "serif",
+              fontStyle: "italic",
+            }}
+          >
+            {strings.backToTop}
+          </LinkButton>
+        </Center>
+      </div>
     </div>
   );
 };

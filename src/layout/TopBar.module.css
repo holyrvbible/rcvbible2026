@@ -53,14 +53,6 @@
   border-color: #484f55;
 }
 
-:global(.mobile) .longTitle {
-  display: none;
-}
-
-:global(.desktop) .shortTitle {
-  display: none;
-}
-
 .button {
   display: flex;
   align-items: center;
