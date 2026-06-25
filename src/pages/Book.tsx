@@ -154,7 +154,9 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
       <Group justify="center" fw={500} fs="italic" ff="serif">
         <PrevNextChapterLinks abbr={abbr}>
           <ChapterLinksToggle onToggle={onToggleChLinksOpened}>
-            {bkNames.full} {strings.overview}
+            <div style={{ textAlign: "center" }}>
+              {bkNames.full} {strings.overview}
+            </div>
           </ChapterLinksToggle>
         </PrevNextChapterLinks>
       </Group>
