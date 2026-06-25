@@ -6,19 +6,18 @@
   "scripts": {
     "dev?": "echo Dev build and serve from source code",
     "dev": "vite",
-    "build?": "echo Build to dist.",
-    "build": "time tsc -b && time vite build",
-    "serve?": "echo Serve index.html from dist. Run build first.",
-    "serve": "serve dist",
-    "prod": "pnpm run build & pnpm run copy & pnpm run serve",
     "lint": "time eslint",
     "fix": "time eslint --fix",
     "format": "time prettier --write .",
     "tsc": "time tsc -b",
     "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
     "ci?": "echo Note that the 'time' command does not exist in the CI shell.",
-    "ci": "eslint && tsc -b && vite build",
-    "preview": "vite preview"
+    "ci": "eslint",
+    "build?": "echo Build to dist. Note that the 'time' command does not exist in the CI shell.",
+    "build": "tsc -b && vite build",
+    "preview?": "echo Serve index.html from dist. Run build first.",
+    "preview": "vite preview",
+    "prod": "pnpm run build & pnpm run preview"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx,css.json}": [
@@ -57,7 +56,6 @@
     "jiti": "^2.7.0",
     "lint-staged": "^17.0.7",
     "prettier": "^3.8.4",
-    "serve": "^14.2.6",
     "typescript": "^6",
     "typescript-eslint": "^8",
     "vite": "^8",
