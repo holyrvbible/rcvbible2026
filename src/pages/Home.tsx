@@ -103,7 +103,10 @@ export const Home: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className={styles.titleBox}>
-        <div className={styles.title}>{strings.websiteTitle}</div>
+        <div
+          className={styles.title}
+          dangerouslySetInnerHTML={{ __html: strings.websiteTitle }}
+        />
         <div className={styles.subTitle}>{strings.websiteSubtitle}</div>
       </div>
 

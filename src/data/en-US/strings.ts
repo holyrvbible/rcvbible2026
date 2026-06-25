@@ -1,5 +1,5 @@
 export const strings = {
-  websiteTitle: "Holy Bible Recovery Version",
+  websiteTitle: "Holy&nbsp;Bible Recovery&nbsp;Version",
   websiteShortTitle: "RcvBible",
   websiteSubtitle: "English + Chinese with footnotes & cross-references",
   oldTestament: "The Old Testament",

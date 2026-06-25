@@ -242,7 +242,14 @@ const ReadyAndValid: React.FC<{
     <Stack gap={0} flex={1}>
       <BookTopBar abbr={abbr} />
 
-      <Group justify="center" fz="180%" fw={500} ff="serif" lh={1.2}>
+      <Group
+        justify="center"
+        fz="180%"
+        fw={500}
+        ff="serif"
+        lh={1.2}
+        ta="center"
+      >
         <SmoothTooltip label={strings.backToOverview}>
           <LinkButton
             to={`/${abbr}`}
