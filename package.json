@@ -16,7 +16,8 @@
     "format": "time prettier --write .",
     "tsc": "time tsc -b",
     "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
-    "ci": "pnpm run lint && tsc -b && vite build",
+    "ci?": "echo Note that the 'time' command does not exist in the CI shell.",
+    "ci": "eslint && tsc -b && vite build",
     "preview": "vite preview"
   },
   "lint-staged": {
