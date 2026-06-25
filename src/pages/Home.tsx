@@ -2,7 +2,6 @@ import { PageSpinner } from "../components/PageSpinner";
 import { BkAbbr, BkAbbrNum } from "../data/bibleMetadata";
 import type { LocaleBookNames } from "../data/localeTypes";
 import { useBookNames } from "../data/useBookNames";
-import styles from "./Home.module.css";
 import { Fragment } from "react/jsx-runtime";
 import { useStrings } from "../data/useStrings";
 import type { StringName, StringsData } from "../data/en-US/strings";
@@ -10,6 +9,7 @@ import { useLocale } from "../data/useLocale";
 import { FadeLine, VerticalFadeLine } from "../components/FadeLine";
 import { linkTo } from "../utils/links";
 import { LinkButton } from "../components/LinkButton";
+import styles from "./Home.module.css";
 
 type BookGroups = { name: StringName; books: BkAbbr[] }[];
 
