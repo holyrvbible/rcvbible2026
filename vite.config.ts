@@ -21,6 +21,9 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        navigateFallbackDenylist: [/^\/.*\.((txt)|(ico)|(png))$/],
+      },
       manifest: {
         name: "Holy Bible Recovery Version 2026",
         short_name: "RcvBible2026",
