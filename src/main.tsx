@@ -32,6 +32,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
+      { path: "index.html", element: <Home /> },
 
       // Add one page per book.
       ...BkAbbr.map((abbr) => ({
