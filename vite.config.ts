@@ -1,7 +1,17 @@
-import { defineConfig } from "vite";
+import { execSync } from "node:child_process";
+import { defineConfig, type Plugin } from "vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import { VitePWA } from "vite-plugin-pwa";
+
+function buildSearchIndex(): Plugin {
+  return {
+    name: "build-search-index",
+    buildStart() {
+      execSync("tsx scripts/buildSearchIndex.ts", { stdio: "inherit" });
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,6 +27,7 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
+    buildSearchIndex(),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
