@@ -2,6 +2,8 @@ import "./main.css";
 import "@mantine/core/styles.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { publicRoutes } from "./data/publicRoutes";
+import { PublicFileRedirect } from "./components/PublicFileRedirect";
 import { StrictMode, Suspense, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Home } from "./pages/Home";
@@ -26,6 +28,12 @@ if (!root) {
 }
 
 const router = createBrowserRouter([
+  // Public assets are served outside the SPA shell.
+  ...publicRoutes.map((filePath) => ({
+    path: filePath,
+    element: <PublicFileRedirect filePath={filePath} />,
+  })),
+
   // Don't lazy load the home page.
   {
     path: "/",
