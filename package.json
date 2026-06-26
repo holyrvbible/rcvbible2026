@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev?": "echo Dev build and serve from source code",
-    "generate:public-routes": "node scripts/generatePublicRoutes.mjs",
-    "dev": "pnpm run generate:public-routes && vite",
+    "dev": "vite",
     "lint": "time eslint",
     "fix": "time eslint --fix",
     "format": "time prettier --write .",
@@ -16,7 +15,7 @@
     "ci?": "echo Note that the 'time' command does not exist in the CI shell.",
     "ci": "eslint && pnpm run build",
     "build?": "echo Build to dist. Note that the 'time' command does not exist in the CI shell.",
-    "build": "pnpm run clean && pnpm run generate:public-routes && tsc -b && vite build --emptyOutDir",
+    "build": "pnpm run clean && tsc -b && vite build --emptyOutDir",
     "preview?": "echo Serve index.html from dist. Run build first.",
     "preview": "vite preview",
     "prod": "pnpm run build && pnpm run preview",
