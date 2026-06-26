@@ -27,6 +27,10 @@ const NotFound: React.FC = () => {
       >
         <IconHome size={16} /> &nbsp;{strings.takeMeHome}
       </LinkButton>
+      <div style={{ fontStyle: "italic", fontSize: "85%" }}>
+        <span style={{ fontWeight: 550 }}>Requested URL:</span>{" "}
+        {window.location.href}
+      </div>
       <Space h="30vh" />
     </Stack>
   );
