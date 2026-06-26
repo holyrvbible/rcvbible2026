@@ -6,8 +6,8 @@
   "scripts": {
     "dev?": "echo Dev build and serve from source code",
     "dev": "vite",
-    "lint": "time eslint",
-    "fix": "time eslint --fix",
+    "lint": "time eslint --cache",
+    "fix": "time eslint --fix --cache",
     "format": "time prettier --write .",
     "tsc": "time tsc -b",
     "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
@@ -19,7 +19,8 @@
     "preview?": "echo Serve index.html from dist. Run build first.",
     "preview": "vite preview",
     "prod": "pnpm run build && pnpm run preview",
-    "deploy": "pnpm run build && wrangler deploy"
+    "deploy:dry": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx,css.json}": [

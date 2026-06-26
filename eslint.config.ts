@@ -33,4 +33,11 @@ export default defineConfig([
       "react-dom/no-dangerously-set-innerhtml": "off",
     },
   },
+  // Disable very slow check no-unsafe-assignment for data files (low risk).
+  {
+    files: ["src/data/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
+    },
+  },
 ]);
