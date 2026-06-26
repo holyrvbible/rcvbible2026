@@ -18,7 +18,7 @@ export function usePageZoom() {
   }, [setZoomPercent]);
 
   return useMemo(
-    () => ({ zoomPercent, zoomIn, zoomOut }),
-    [zoomIn, zoomOut, zoomPercent],
+    () => ({ zoomPercent, zoomIn, zoomOut, setZoomPercent }),
+    [zoomIn, zoomOut, zoomPercent, setZoomPercent],
   );
 }
