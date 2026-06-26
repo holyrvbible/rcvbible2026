@@ -11,6 +11,7 @@
     "format": "time prettier --write .",
     "tsc": "time tsc -b",
     "fft": "pnpm run fix && pnpm run format && pnpm run tsc",
+    "precommit": "pnpm run lint && pnpm run format && pnpm run tsc",
     "clean": "rm -rf dist",
     "ci?": "echo Note that the 'time' command does not exist in the CI shell.",
     "ci": "eslint && pnpm run build",
@@ -20,13 +21,15 @@
     "preview": "vite preview",
     "prod": "pnpm run build && pnpm run preview",
     "deploy:dry": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "prepare": "husky"
   },
   "lint-staged": {
-    "**/*.{js,ts,tsx,css.json}": [
-      "prettier --write .",
-      "eslint --fix"
-    ]
+    "*.{ts,tsx}": [
+      "eslint --fix --cache",
+      "prettier --write"
+    ],
+    "*.{css,json,md,html}": "prettier --write"
   },
   "dependencies": {
     "@mantine/core": "^9.3.1",
@@ -64,5 +67,6 @@
     "vite": "^8",
     "vite-plugin-pwa": "^1.3.0",
     "wrangler": "^4.104.0"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }
