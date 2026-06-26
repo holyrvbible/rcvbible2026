@@ -36,6 +36,8 @@ export const strings = {
   showNotes: "Show Notes",
   hideNotes: "Hide Notes",
   hideThisNote: "Hide this note",
+  showNotesAndReferences: "Show notes & references",
+  showSuperscriptsInVerseText: "Show superscripts in verse text",
   chapterOfTotal: "{1} {2} of {3}",
   noSuchChapter: "No such chapter {1} in {2}.",
   titleLabel: "Title:",

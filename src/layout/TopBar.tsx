@@ -8,10 +8,11 @@ import { usePageZoom } from "../utils/usePageZoom";
 import { useBilingual } from "../utils/useBilingual";
 import { SmoothTooltip } from "../components/SmoothTooltip";
 import { useDisclosure } from "@mantine/hooks";
-import { Collapse, Divider, Group } from "@mantine/core";
+import { Checkbox, Collapse, Divider, Group } from "@mantine/core";
 import { BkAbbr } from "../data/bibleMetadata";
 import { useBookNames } from "../data/useBookNames";
 import type { LocaleBookNames } from "../data/localeTypes";
+import { useHideSups } from "../utils/useHideSups";
 
 const ICON_SIZE = 17;
 
@@ -157,6 +158,7 @@ const MenuTable: React.FC = () => {
   const { zoomIn, zoomOut, zoomPercent, setZoomPercent } = usePageZoom();
   const { locale, setLocale } = useLocale();
   const [bilingual, setBilingual] = useBilingual();
+  const [hideSups, setHideSups] = useHideSups();
   const strings = useStrings();
 
   return (
@@ -286,6 +288,25 @@ const MenuTable: React.FC = () => {
                 >
                   中 + EN
                 </div>
+              </SmoothTooltip>
+            </Group>
+          </td>
+        </tr>
+        <tr>
+          <th>{strings?.showNotesAndReferences}</th>
+          <td>
+            <Group gap={5}>
+              <SmoothTooltip label={strings?.showSuperscriptsInVerseText}>
+                <Checkbox
+                  checked={!hideSups}
+                  className={styles.button}
+                  onClick={() => {
+                    setHideSups((v) => !v);
+                  }}
+                  styles={{
+                    input: { backgroundColor: "#333", borderColor: "#777" },
+                  }}
+                />
               </SmoothTooltip>
             </Group>
           </td>

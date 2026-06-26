@@ -18,6 +18,7 @@ export const VtextLine: React.FC<{
   vtextWithSups: VtextWithSups;
   showBilingual: boolean;
   bilingualVtext: string;
+  hideSups: boolean;
   clickEffect?: "Show" | "Hide";
   onVrefClick: () => void;
   onVtextSupClick: (sup: string) => void;
@@ -31,6 +32,7 @@ export const VtextLine: React.FC<{
   vtextWithSups,
   showBilingual,
   bilingualVtext,
+  hideSups,
   clickEffect,
   onVrefClick,
   onVtextSupClick,
@@ -73,6 +75,11 @@ export const VtextLine: React.FC<{
         }
 
         const { sup, word } = v;
+
+        if (hideSups) {
+          return word;
+        }
+
         return (
           <LinkButton
             key={key}
@@ -96,9 +103,11 @@ export const VtextLine: React.FC<{
         <div
           style={{ color: "#050", textIndent: -10, marginLeft: 20 }}
           dangerouslySetInnerHTML={{
-            __html: bilingualVtext
-              .replaceAll("[", "<sup>")
-              .replaceAll("]", "</sup>"),
+            __html: hideSups
+              ? bilingualVtext.replace(/\[[^]]+\]/g, "")
+              : bilingualVtext
+                  .replaceAll("[", "<sup>")
+                  .replaceAll("]", "</sup>"),
           }}
         ></div>
       </Collapse>

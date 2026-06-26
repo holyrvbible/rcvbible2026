@@ -42,6 +42,7 @@ import { OutlinesBox } from "../components/OutlinesBox";
 import { useBilingual } from "../utils/useBilingual";
 import type { LocaleBookNames } from "../data/localeTypes";
 import { SmoothTooltip } from "../components/SmoothTooltip";
+import { useHideSups } from "../utils/useHideSups";
 
 const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const params = useParams();
@@ -153,6 +154,7 @@ const ReadyAndValid: React.FC<{
   // altLocale data is optional to render the page (load async).
   const { altLocale } = useLocale();
   const [bilingual] = useBilingual();
+  const [hideSups] = useHideSups();
   const altBookNames = useBookNames(altLocale);
   const altBookData = useBookData(altLocale, abbr);
   const tryGetBkAbbr = useTryGetBkAbbr(bookNames);
@@ -415,6 +417,7 @@ const ReadyAndValid: React.FC<{
               vtextWithSups={vtextWithSups}
               showBilingual={bilingual}
               bilingualVtext={bilingualVtext}
+              hideSups={hideSups}
               clickEffect={anyHidden ? "Show" : "Hide"}
               onVrefClick={() => {
                 onVrefClick(vn, notesRefsItems);

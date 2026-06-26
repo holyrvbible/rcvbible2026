@@ -38,6 +38,8 @@ export const strings: StringsData = {
   showNotes: "显示注解",
   hideNotes: "隐藏注解",
   hideThisNote: "隐藏此注解",
+  showNotesAndReferences: "显示注解与参照",
+  showSuperscriptsInVerseText: "显示经节文字中的上标",
   chapterOfTotal: "{1} 第{2}章 / 共{3}章",
   noSuchChapter: "{2}没有第{1}章。",
   titleLabel: "标题：",
