@@ -40,6 +40,7 @@ function flattenSearchResults(results: unknown): SearchStoredData[] {
 }
 
 function parseToSearchHit(hit: SearchStoredData): SearchHit {
+  // The id contains the vref.
   const abbrChVn = hit.id;
   const match = /^(\w\w\w)(\d+):(\d+)$/.exec(abbrChVn);
   if (!match) throw new Error(`Bad hit id '${abbrChVn}'`);
@@ -50,9 +51,8 @@ function parseToSearchHit(hit: SearchStoredData): SearchHit {
   const vnStr = match[3];
   const vn = Number(vnStr);
 
-  const textMatch = /^(\w\w\w \d+(:\d+)?\s*)/.exec(hit.text);
-  if (!textMatch) throw new Error(`Bad hit text '${hit.text}'`);
-  const text = hit.text.slice(textMatch[1].length);
+  // The text before the pipe is for searching only, but not for display.
+  const text = hit.text.split("|")[1];
 
   return {
     id: hit.id,

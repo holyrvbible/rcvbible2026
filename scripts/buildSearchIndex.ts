@@ -10,7 +10,7 @@ import { SupportedLocales } from "../src/data/localeTypes.ts";
 import { getSearchIndexOptions } from "../src/search/searchIndexConfig.ts";
 import type {
   SearchDocument,
-  SearchSourceData,
+  SearchStoredData,
 } from "../src/search/searchTypes.ts";
 import { getVerseRawText, VERSE_SPLIT_SEPARATOR } from "../src/utils/verses.ts";
 
@@ -40,12 +40,12 @@ async function main() {
 
         index.add({
           id: `${abbr}${vref}`,
-          full: bkNames.full,
-          ref: bkNames.ref,
+          // Warning: The search doesn't work at all across multiple fields, so
+          // put them all into one field.
           text:
-            `${abbr} ${displayVref} ` +
+            `${bkNames.full} ${bkNames.ref} ${abbr} ${displayVref}|` +
             getVerseRawText(vtext.replace(VERSE_SPLIT_SEPARATOR, " ")),
-        } satisfies SearchSourceData);
+        } satisfies SearchStoredData);
       }
     }
 
