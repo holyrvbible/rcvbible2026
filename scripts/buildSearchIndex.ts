@@ -1,4 +1,5 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
+import { gzipSync } from "node:zlib";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Document } from "flexsearch";
@@ -20,6 +21,10 @@ const outputDir = join(__dirname, "..", "public", "search");
 
 async function main() {
   mkdirSync(outputDir, { recursive: true });
+
+  for (const name of readdirSync(outputDir)) {
+    unlinkSync(join(outputDir, name));
+  }
 
   for (const locale of SupportedLocales) {
     const index = new Document<SearchDocument>(getSearchIndexOptions(locale));
@@ -49,7 +54,10 @@ async function main() {
       exported[key] = data;
     });
 
-    writeFileSync(join(outputDir, `${locale}.json`), JSON.stringify(exported));
+    writeFileSync(
+      join(outputDir, `${locale}.json.gz`),
+      gzipSync(JSON.stringify(exported)),
+    );
     console.log(`Built search index for ${locale}`);
   }
 }
