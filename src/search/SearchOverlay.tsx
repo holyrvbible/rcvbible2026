@@ -59,11 +59,7 @@ export const SearchOverlay: React.FC<{
           aria-label={strings?.searchResultsDialog}
           style={transitionStyles}
         >
-          <Group
-            className={clsx(styles.status, error && styles.error)}
-            justify="space-between"
-            c="#666"
-          >
+          <Group className={clsx(styles.status, error && styles.error)}>
             {status}
             <LinkButton className={styles.closeButton} to="" onClick={onClose}>
               <IconX size={20} />
