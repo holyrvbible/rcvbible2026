@@ -3,6 +3,19 @@ import type { LocaleBookNames, SupportedLocale } from "./localeTypes";
 
 const cache: Partial<Record<SupportedLocale, LocaleBookNames>> = {};
 
+export async function importBookNames(locale: SupportedLocale) {
+  switch (locale) {
+    case "en-US":
+      return import(`./en-US/bookNames`);
+    case "zh-CN":
+      return import(`./zh-CN/bookNames`);
+    default:
+      locale satisfies never;
+      // Fallback to en-US.
+      return import(`./en-US/bookNames`);
+  }
+}
+
 export function useBookNames(locale: SupportedLocale) {
   const [bookNames, setBookNames] = useState<LocaleBookNames>();
 
@@ -16,18 +29,7 @@ export function useBookNames(locale: SupportedLocale) {
       }
 
       // Use constant import paths for full type-checking.
-      const loaded = await (() => {
-        switch (locale) {
-          case "en-US":
-            return import(`./en-US/bookNames`);
-          case "zh-CN":
-            return import(`./zh-CN/bookNames`);
-          default:
-            locale satisfies never;
-            // Fallback to en-US.
-            return import(`./en-US/bookNames`);
-        }
-      })();
+      const loaded = await importBookNames(locale);
 
       cache[locale] = loaded.default;
       if (!canceled) setBookNames(loaded.default);

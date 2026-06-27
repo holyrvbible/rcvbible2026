@@ -1,6 +1,10 @@
 import { Charset, type DocumentOptions } from "flexsearch";
 import type { SupportedLocale } from "../data/localeTypes";
-import type { SearchDocument } from "./searchTypes";
+import type {
+  SearchDocument,
+  SearchSourceData,
+  SearchStoredData,
+} from "./searchTypes";
 
 export function getSearchIndexOptions(
   locale: SupportedLocale,
@@ -10,8 +14,8 @@ export function getSearchIndexOptions(
     ...(locale === "zh-CN" ? { charset: Charset.CJK } : {}),
     document: {
       id: "id",
-      index: ["text"],
-      store: ["abbr", "ch", "vn", "text"],
+      index: ["full", "text"] satisfies (keyof SearchSourceData)[],
+      store: ["text"] satisfies (keyof SearchStoredData)[],
     },
   };
 }

@@ -1,10 +1,15 @@
-import type { SearchDocument, SearchHit } from "./searchTypes";
+import type {
+  SearchDocument,
+  SearchStoredData,
+  SearchHit,
+} from "./searchTypes";
 import { type SearchIndex } from "./loadSearchIndex";
+import type { BkAbbr } from "../data/bibleMetadata";
 
-function flattenSearchResults(results: unknown): SearchHit[] {
+function flattenSearchResults(results: unknown): SearchStoredData[] {
   if (!Array.isArray(results)) return [];
 
-  const hits: SearchHit[] = [];
+  const hits: SearchStoredData[] = [];
   const seen = new Set<string>();
 
   for (const group of results) {
@@ -26,15 +31,36 @@ function flattenSearchResults(results: unknown): SearchHit[] {
       seen.add(id);
       hits.push({
         id,
-        abbr: doc.abbr,
-        ch: doc.ch,
-        vn: doc.vn,
         text: doc.text,
       });
     }
   }
 
   return hits;
+}
+
+function parseToSearchHit(hit: SearchStoredData): SearchHit {
+  const abbrChVn = hit.id;
+  const match = /^(\w\w\w)(\d+):(\d+)$/.exec(abbrChVn);
+  if (!match) throw new Error(`Bad hit id '${abbrChVn}'`);
+
+  const abbr = match[1] as BkAbbr;
+  const chStr = match[2];
+  const ch = Number(chStr);
+  const vnStr = match[3];
+  const vn = Number(vnStr);
+
+  const textMatch = /^(\w\w\w \d+(:\d+)?\s*)/.exec(hit.text);
+  if (!textMatch) throw new Error(`Bad hit text '${hit.text}'`);
+  const text = hit.text.slice(textMatch[1].length);
+
+  return {
+    id: hit.id,
+    abbr,
+    ch,
+    vn,
+    text,
+  };
 }
 
 export function performSearch(
@@ -50,5 +76,5 @@ export function performSearch(
     limit,
   });
 
-  return flattenSearchResults(results);
+  return flattenSearchResults(results).map(parseToSearchHit);
 }

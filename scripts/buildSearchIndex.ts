@@ -2,11 +2,15 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Document } from "flexsearch";
-import { BkAbbr } from "../src/data/bibleMetadata.ts";
+import { BkAbbr, BkAbbrNum, BkNumChapters } from "../src/data/bibleMetadata.ts";
 import { importBookData } from "../src/data/useBookData.ts";
+import { importBookNames } from "../src/data/useBookNames.ts";
 import { SupportedLocales } from "../src/data/localeTypes.ts";
 import { getSearchIndexOptions } from "../src/search/searchIndexConfig.ts";
-import type { SearchDocument } from "../src/search/searchTypes.ts";
+import type {
+  SearchDocument,
+  SearchSourceData,
+} from "../src/search/searchTypes.ts";
 import { getVerseRawText, VERSE_SPLIT_SEPARATOR } from "../src/utils/verses.ts";
 
 // Output to `/public/search` instead of to `src/...` as we don't want to
@@ -19,22 +23,24 @@ async function main() {
 
   for (const locale of SupportedLocales) {
     const index = new Document<SearchDocument>(getSearchIndexOptions(locale));
+    const { default: bookNames } = await importBookNames(locale);
 
     for (const abbr of BkAbbr) {
+      const bkNames = bookNames[abbr];
       const { data } = await importBookData(locale, abbr);
 
       for (const [vref, vtext] of Object.entries(data.verses)) {
-        const [chStr, vnStr] = vref.split(":");
-        const ch = Number(chStr);
-        const vn = Number(vnStr);
+        const vnStr = vref.split(":")[1];
+        const displayVref = BkNumChapters[BkAbbrNum[abbr]] === 1 ? vnStr : vref;
 
         index.add({
-          id: `${abbr}:${vref}`,
-          abbr,
-          ch,
-          vn,
-          text: getVerseRawText(vtext.replace(VERSE_SPLIT_SEPARATOR, " ")),
-        });
+          id: `${abbr}${vref}`,
+          full: bkNames.full,
+          ref: bkNames.ref,
+          text:
+            `${abbr} ${displayVref} ` +
+            getVerseRawText(vtext.replace(VERSE_SPLIT_SEPARATOR, " ")),
+        } satisfies SearchSourceData);
       }
     }
 
