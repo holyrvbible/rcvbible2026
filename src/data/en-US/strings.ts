@@ -45,6 +45,10 @@ export const strings = {
   notFoundLine2: "homepage is a great starting point.",
   takeMeHome: "Take me home",
   loading: "Loading...",
+  searchNoResults: "No results for “{1}”.",
+  searchShowingOneResult: "Showing 1 result for “{1}”.",
+  searchShowingResults: "Showing {1} results for “{2}”.",
+  searchResultsDialog: "Bible search results",
 } as const;
 
 // Use the English translation to define the i18n type.

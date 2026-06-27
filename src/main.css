@@ -1,3 +1,7 @@
+:root {
+  --top-bar-height: 36.5px;
+}
+
 body {
   margin: 0;
 }

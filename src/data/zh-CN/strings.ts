@@ -47,4 +47,8 @@ export const strings: StringsData = {
   notFoundLine2: "首页是一个很好的起点。",
   takeMeHome: "返回首页",
   loading: "加载中…",
+  searchNoResults: "没有找到“{1}”的结果。",
+  searchShowingOneResult: "显示 1 条与“{1}”匹配的结果。",
+  searchShowingResults: "显示 {1} 条与“{2}”匹配的结果。",
+  searchResultsDialog: "圣经搜索结果",
 };

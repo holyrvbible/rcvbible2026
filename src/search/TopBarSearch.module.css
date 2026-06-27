@@ -1,0 +1,120 @@
+.searchWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.searchField {
+  position: relative;
+  width: min(100%, 320px);
+}
+
+.searchInput {
+  width: 100%;
+  color: white;
+  font-size: 90%;
+  font-family: sans-serif;
+  padding: 4px 26px 4px 7px;
+  margin-top: 1px;
+  border-radius: 6px;
+  border: 1px solid #343a40;
+  background-color: #343a40;
+  opacity: 0;
+  transition:
+    opacity 0.2s linear,
+    color 0.2s linear,
+    background-color 0.2s linear,
+    border-color 0.2s linear;
+}
+
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.searchInput.active {
+  opacity: 1;
+}
+
+.clearButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.clearButton:hover {
+  color: rgb(223, 223, 244);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.searchInput::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+.searchInput:hover,
+.searchInput:focus {
+  color: rgb(223, 223, 244);
+  background-color: #39434a;
+  outline: none;
+}
+
+.searchInput:hover {
+  border-color: #797d81;
+}
+
+.searchInput:focus {
+  border-color: #ccc;
+}
+
+.floatingPlaceholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  padding: 4px 7px;
+  border-radius: 6px;
+  border: 1px solid #343a40;
+  background-color: #343a40;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 90%;
+  font-family: sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: text;
+  user-select: none;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s linear,
+    color 0.2s linear,
+    background-color 0.2s linear,
+    border-color 0.2s linear;
+}
+
+.floatingPlaceholder.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.floatingPlaceholder:hover {
+  color: rgb(223, 223, 244);
+  background-color: #39434a;
+  border-color: #797d81;
+}

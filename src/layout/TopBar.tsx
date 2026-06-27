@@ -1,9 +1,10 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import styles from "./TopBar.module.css";
-import { IconMenu2, IconMinus, IconPlus } from "@tabler/icons-react";
+import { IconHome, IconMenu2, IconMinus, IconPlus } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useLocale } from "../data/useLocale";
 import { useStrings } from "../data/useStrings";
+import { TopBarSearch } from "../search/TopBarSearch";
 import { usePageZoom } from "../utils/usePageZoom";
 import { useBilingual } from "../utils/useBilingual";
 import { SmoothTooltip } from "../components/SmoothTooltip";
@@ -91,6 +92,7 @@ export const TopBar: React.FC = () => {
   const bookNames = useBookNames(locale);
   const strings = useStrings();
   const [opened, { toggle, close }] = useDisclosure();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -109,26 +111,20 @@ export const TopBar: React.FC = () => {
           </div>
         </div>
 
-        {/* Main website title */}
-        <div>
-          <Link className={styles.title} to="/">
-            {strings?.websiteShortTitle} 2026
-          </Link>
-        </div>
+        <TopBarSearch />
 
         {/* Take up the same space as on the left side */}
         <div className={clsx(styles.buttonsGroup, styles.rightAlign)}>
           <div className={styles.buttonsGroupInnerWrapper}>
             <div
               className={styles.button}
-              style={{
-                borderColor: "transparent",
-                background: "transparent",
-                color: "transparent",
-                cursor: "default",
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                void navigate("/");
               }}
             >
-              <IconMenu2 stroke={2} size={ICON_SIZE} />
+              <IconHome stroke={2} size={ICON_SIZE} />
             </div>
           </div>
         </div>
