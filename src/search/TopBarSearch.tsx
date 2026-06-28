@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState, type RefObject } from "react";
 import styles from "./TopBarSearch.module.css";
 import { useLocale } from "../data/useLocale";
 import { useStrings } from "../data/useStrings";
@@ -9,18 +9,19 @@ import clsx from "clsx";
 import { useAtom } from "jotai";
 import { searchTextAtom } from "./searchTextAtom";
 
-export const TopBarSearch: React.FC = () => {
+export const TopBarSearch: React.FC<{
+  searchInputRef: RefObject<HTMLInputElement | null>;
+}> = ({ searchInputRef }) => {
   const strings = useStrings();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [searchText, setSearchText] = useAtom(searchTextAtom);
   const [searchActivated, setSearchActivated] = useState(false);
   const [focused, setFocused] = useState(false);
   const [overlayOpened, setOverlayOpened] = useState(false);
 
   const onClose = useCallback(() => {
-    inputRef.current?.blur();
+    searchInputRef.current?.blur();
     setOverlayOpened(false);
-  }, []);
+  }, [searchInputRef]);
 
   useEffect(() => {
     if (!searchText.trim()) return;
@@ -45,15 +46,15 @@ export const TopBarSearch: React.FC = () => {
 
   const activateSearch = useCallback(() => {
     setSearchActivated(true);
-    inputRef.current?.focus();
-  }, []);
+    searchInputRef.current?.focus();
+  }, [searchInputRef]);
 
   return (
     <>
       <div className={styles.searchWrap}>
         <div className={styles.searchField}>
           <input
-            ref={inputRef}
+            ref={searchInputRef}
             aria-label="Search the Bible"
             className={clsx(
               styles.searchInput,
@@ -97,7 +98,7 @@ export const TopBarSearch: React.FC = () => {
               onClick={() => {
                 setSearchText("");
                 setOverlayOpened(false);
-                inputRef.current?.focus();
+                searchInputRef.current?.focus();
               }}
             >
               <IconX size={14} stroke={2} />

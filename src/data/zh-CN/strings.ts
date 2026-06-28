@@ -38,7 +38,8 @@ export const strings: StringsData = {
   showNotes: "显示注解",
   hideNotes: "隐藏注解",
   hideThisNote: "隐藏此注解",
-  showNotesAndReferences: "显示注解与参照",
+  notesAndReferences: "注解与参照",
+  show: "显示",
   showSuperscriptsInVerseText: "显示经节文字中的上标",
   chapterOfTotal: "{1} 第{2}章 / 共{3}章",
   noSuchChapter: "{2}没有第{1}章。",
@@ -55,4 +56,6 @@ export const strings: StringsData = {
   searchListingOneVerse: "列出“{1}”的经节。",
   searchListingVerses: "列出“{1}”的经节。",
   searchResultsDialog: "圣经搜索结果",
+  verseTextSearch: "经文搜索",
+  startSearching: "开始搜索",
 };

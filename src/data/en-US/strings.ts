@@ -36,7 +36,8 @@ export const strings = {
   showNotes: "Show Notes",
   hideNotes: "Hide Notes",
   hideThisNote: "Hide this note",
-  showNotesAndReferences: "Show notes & references",
+  notesAndReferences: "Notes & references",
+  show: "Show",
   showSuperscriptsInVerseText: "Show superscripts in verse text",
   chapterOfTotal: "{1} {2} of {3}",
   noSuchChapter: "No such chapter {1} in {2}.",
@@ -53,6 +54,8 @@ export const strings = {
   searchListingOneVerse: "Listing verse for “{1}”.",
   searchListingVerses: "Listing verses for “{1}”.",
   searchResultsDialog: "Bible search results",
+  verseTextSearch: "Verse text search",
+  startSearching: "Start Searching",
 } as const;
 
 // Use the English translation to define the i18n type.

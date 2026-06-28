@@ -9,11 +9,12 @@ import { usePageZoom } from "../utils/usePageZoom";
 import { useBilingual } from "../utils/useBilingual";
 import { SmoothTooltip } from "../components/SmoothTooltip";
 import { useDisclosure } from "@mantine/hooks";
-import { Checkbox, Collapse, Divider, Group } from "@mantine/core";
+import { Box, Checkbox, Collapse, Divider, Group } from "@mantine/core";
 import { BkAbbr } from "../data/bibleMetadata";
 import { useBookNames } from "../data/useBookNames";
 import type { LocaleBookNames } from "../data/localeTypes";
 import { useHideSups } from "../utils/useHideSups";
+import { useRef, type RefObject } from "react";
 
 const ICON_SIZE = 17;
 
@@ -92,6 +93,7 @@ export const TopBar: React.FC = () => {
   const bookNames = useBookNames(locale);
   const strings = useStrings();
   const [opened, { toggle, close }] = useDisclosure();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   return (
@@ -111,7 +113,7 @@ export const TopBar: React.FC = () => {
           </div>
         </div>
 
-        <TopBarSearch />
+        <TopBarSearch searchInputRef={searchInputRef} />
 
         {/* Take up the same space as on the left side */}
         <div className={clsx(styles.buttonsGroup, styles.rightAlign)}>
@@ -132,7 +134,7 @@ export const TopBar: React.FC = () => {
       <div className={styles.menu}>
         <Collapse expanded={opened}>
           <div className={styles.menuContent} onClick={close}>
-            <MenuTable />
+            <MenuTable searchInputRef={searchInputRef} />
 
             <Divider color="#555" />
 
@@ -150,7 +152,9 @@ export const TopBar: React.FC = () => {
   );
 };
 
-const MenuTable: React.FC = () => {
+const MenuTable: React.FC<{
+  searchInputRef: RefObject<HTMLInputElement | null>;
+}> = ({ searchInputRef }) => {
   const { zoomIn, zoomOut, zoomPercent, setZoomPercent } = usePageZoom();
   const { locale, setLocale } = useLocale();
   const [bilingual, setBilingual] = useBilingual();
@@ -160,6 +164,24 @@ const MenuTable: React.FC = () => {
   return (
     <table cellPadding={0} cellSpacing={0} border={0}>
       <tbody>
+        <tr>
+          <th>{strings?.verseTextSearch}</th>
+          <td>
+            {/* Prevent the button from stretching to full width */}
+            <Box display="inline-block">
+              <div
+                className={styles.button}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  searchInputRef.current?.focus();
+                }}
+              >
+                {strings?.startSearching}
+              </div>
+            </Box>
+          </td>
+        </tr>
         <tr>
           <th>{strings?.fontZoom}</th>
           <td>
@@ -289,10 +311,10 @@ const MenuTable: React.FC = () => {
           </td>
         </tr>
         <tr>
-          <th>{strings?.showNotesAndReferences}</th>
+          <th>{strings?.notesAndReferences}</th>
           <td>
-            <Group gap={5}>
-              <SmoothTooltip label={strings?.showSuperscriptsInVerseText}>
+            <SmoothTooltip label={strings?.showSuperscriptsInVerseText}>
+              <Group gap={8}>
                 <Checkbox
                   checked={!hideSups}
                   className={styles.button}
@@ -303,8 +325,9 @@ const MenuTable: React.FC = () => {
                     input: { backgroundColor: "#333", borderColor: "#777" },
                   }}
                 />
-              </SmoothTooltip>
-            </Group>
+                {strings?.show}
+              </Group>
+            </SmoothTooltip>
           </td>
         </tr>
       </tbody>
