@@ -11,6 +11,7 @@ import clsx from "clsx";
 import { LinkButton } from "../components/LinkButton";
 import { IconX } from "@tabler/icons-react";
 import type { SearchResults } from "./useBibleSearch";
+import { highlightSearchText } from "./highlightSearchText";
 
 export const SearchOverlay: React.FC<{
   opened: boolean;
@@ -115,7 +116,11 @@ export const SearchOverlay: React.FC<{
                         </span>
                         <span className={styles.numbering}>#{index + 1}</span>
                       </div>
-                      <div className={styles.snippet}>{hit.text}</div>
+                      <div className={styles.snippet}>
+                        {results.searchType === "fullText"
+                          ? highlightSearchText(hit.text, query, locale)
+                          : hit.text}
+                      </div>
                     </Link>
                   </li>
                 );
