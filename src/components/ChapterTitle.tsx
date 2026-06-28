@@ -14,7 +14,6 @@ export const ChapterTitle: React.FC<{
   ch: number;
   bookData: BookData;
   tryGetBkAbbr: TryGetBkAbbrFn;
-  showAllNotes: boolean;
   showNotesRefs: Set<string>;
   setShowNotesRefs: (value: SetStateAction<Set<string>>) => void;
 }> = ({
@@ -23,7 +22,6 @@ export const ChapterTitle: React.FC<{
   ch,
   bookData,
   tryGetBkAbbr,
-  showAllNotes,
   showNotesRefs,
   setShowNotesRefs,
 }) => {
@@ -136,7 +134,6 @@ export const ChapterTitle: React.FC<{
         vn="Title"
         notesRefsItems={notesRefsItems}
         tryGetBkAbbr={tryGetBkAbbr}
-        showAllNotes={showAllNotes}
         showNotesRefs={showNotesRefs}
         setShowNotesRefs={setShowNotesRefs}
       />
