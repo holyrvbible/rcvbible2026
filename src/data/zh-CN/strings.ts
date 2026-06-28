@@ -58,4 +58,5 @@ export const strings: StringsData = {
   searchResultsDialog: "圣经搜索结果",
   verseTextSearch: "经文搜索",
   startSearching: "开始搜索",
+  feedback: "反馈",
 };

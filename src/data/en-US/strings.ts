@@ -56,6 +56,7 @@ export const strings = {
   searchResultsDialog: "Bible search results",
   verseTextSearch: "Verse text search",
   startSearching: "Start Searching",
+  feedback: "Feedback",
 } as const;
 
 // Use the English translation to define the i18n type.

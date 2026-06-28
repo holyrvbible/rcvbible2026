@@ -150,6 +150,13 @@ export const TopBar: React.FC = () => {
 
             <b>{strings?.newTestament}</b>
             <BookLinks abbrs={BkAbbr.slice(39)} bookNames={bookNames} />
+
+            <Box mt={10} fz="85%">
+              {strings?.feedback}:{" "}
+              <a href="mailto:holyrcvbible@gmail.com" style={{ color: "#aff" }}>
+                holyrcvbible@gmail.com
+              </a>
+            </Box>
           </div>
         </Collapse>
       </div>
