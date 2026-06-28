@@ -11,6 +11,7 @@ import { linkTo } from "../utils/links";
 import { LinkButton } from "../components/LinkButton";
 import styles from "./Home.module.css";
 import { Center } from "@mantine/core";
+import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 
 type BookGroups = { name: StringName; books: BkAbbr[] }[];
 
@@ -95,6 +96,8 @@ export const Home: React.FC = () => {
   const { locale } = useLocale();
   const bookNames = useBookNames(locale);
   const strings = useStrings();
+
+  useSetDocumentTitle(strings?.websiteShortTitle);
 
   if (!bookNames || !strings) {
     return <PageSpinner />;

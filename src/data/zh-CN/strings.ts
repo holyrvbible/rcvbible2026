@@ -2,7 +2,7 @@ import type { StringsData } from "../en-US/strings";
 
 export const strings: StringsData = {
   websiteTitle: "恢复本圣经",
-  websiteShortTitle: "恢复本圣经",
+  websiteShortTitle: "恢复本圣经 2026",
   websiteSubtitle: "英文+中文，含注解与参照",
   oldTestament: "旧约",
   newTestament: "新约",

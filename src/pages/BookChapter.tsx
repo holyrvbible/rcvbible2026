@@ -43,6 +43,7 @@ import { useBilingual } from "../utils/useBilingual";
 import type { LocaleBookNames } from "../data/localeTypes";
 import { SmoothTooltip } from "../components/SmoothTooltip";
 import { useHideSups } from "../utils/useHideSups";
+import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 
 const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const params = useParams();
@@ -164,6 +165,8 @@ const ReadyAndValid: React.FC<{
 
   const chStr = String(ch);
   const numChapters = BkNumChapters[BkAbbrNum[abbr]];
+
+  useSetDocumentTitle(bookNames[abbr].full + " " + chStr);
 
   const chVerses = useMemo(() => {
     const chPrefix = chStr + ":";

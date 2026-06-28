@@ -21,6 +21,7 @@ import { useTryGetBkAbbr } from "../data/useTryGetBkAbbr";
 import { LinkButton } from "../components/LinkButton";
 import { scrollToTop } from "../utils/scrollToElement";
 import { SmoothTooltip } from "../components/SmoothTooltip";
+import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 
 const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const { locale } = useLocale();
@@ -31,6 +32,8 @@ const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
 
   const { opened: chLinksOpened, toggle: onToggleChLinksOpened } =
     useChapterLinksOpened();
+
+  useSetDocumentTitle(bookNames?.[abbr].full);
 
   if (!bookNames || !bookData || !strings) {
     return <PageSpinner />;

@@ -43,9 +43,7 @@ export const TopBarSearch: React.FC<{
     };
   }, [onClose, searchText]);
 
-  const searchPlaceholder = strings
-    ? `${strings.websiteShortTitle} 2026`
-    : undefined;
+  const searchPlaceholder = strings?.websiteShortTitle;
 
   const showFloatingPlaceholder = !focused;
 

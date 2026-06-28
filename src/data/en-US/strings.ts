@@ -1,6 +1,6 @@
 export const strings = {
   websiteTitle: "Holy&nbsp;Bible Recovery&nbsp;Version",
-  websiteShortTitle: "RcvBible",
+  websiteShortTitle: "RcvBible 2026",
   websiteSubtitle: "English + Chinese with footnotes & cross-references",
   oldTestament: "The Old Testament",
   newTestament: "The New Testament",
