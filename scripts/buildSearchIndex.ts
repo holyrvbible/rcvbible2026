@@ -43,7 +43,7 @@ async function main() {
           // Warning: The search doesn't work at all across multiple fields, so
           // put them all into one field.
           text:
-            `${bkNames.full} ${bkNames.ref} ${abbr} ${displayVref}|` +
+            `${bkNames.full} ${abbr} ${displayVref}|` +
             getVerseRawText(vtext.replace(VERSE_SPLIT_SEPARATOR, " ")),
         } satisfies SearchStoredData);
       }

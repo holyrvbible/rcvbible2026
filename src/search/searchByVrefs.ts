@@ -35,7 +35,7 @@ function parseUserInputVrefs(
 
   // Split on semicolons or commas, trim each segment.
   const segments = input
-    .split(/[;,；，\n\r]/)
+    .split(/[;,；，、\n\r]/)
     .map((s) => s.trim())
     .filter(Boolean);
 
