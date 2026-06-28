@@ -66,7 +66,7 @@ function parseToSearchHit(hit: SearchStoredData): SearchHit {
 export function performSearch(
   searchIndex: SearchIndex,
   query: string,
-  limit = 50,
+  limit: number,
 ): SearchHit[] {
   const trimmed = query.trim();
   if (!trimmed) return [];

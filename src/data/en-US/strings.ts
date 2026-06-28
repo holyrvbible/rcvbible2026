@@ -45,9 +45,13 @@ export const strings = {
   notFoundLine2: "homepage is a great starting point.",
   takeMeHome: "Take me home",
   loading: "Loading...",
+  searchEnterText: "Enter text to search for",
+  searchLoadingIndex: "Loading search index...",
   searchNoResults: "No results for “{1}”.",
   searchShowingOneResult: "Showing 1 result for “{1}”.",
   searchShowingResults: "Showing {1} results for “{2}”.",
+  searchListingOneVerse: "Listing verse for “{1}”.",
+  searchListingVerses: "Listing verses for “{1}”.",
   searchResultsDialog: "Bible search results",
 } as const;
 

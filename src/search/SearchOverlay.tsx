@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import { Group, Loader, Transition } from "@mantine/core";
 import styles from "./SearchOverlay.module.css";
-import type { SearchHit } from "./searchTypes";
 import { linkTo } from "../utils/links";
 import { useStrings } from "../data/useStrings";
 import { BkAbbrNum, BkNumChapters } from "../data/bibleMetadata";
@@ -11,11 +10,12 @@ import { useMemo } from "react";
 import clsx from "clsx";
 import { LinkButton } from "../components/LinkButton";
 import { IconX } from "@tabler/icons-react";
+import type { SearchResults } from "./useBibleSearch";
 
 export const SearchOverlay: React.FC<{
   opened: boolean;
   query: string;
-  results: SearchHit[];
+  results: SearchResults | undefined;
   loading: boolean;
   error: string | null;
   onClose: () => void;
@@ -31,19 +31,38 @@ export const SearchOverlay: React.FC<{
     if (error) {
       return [error, false];
     }
+
+    if (!results) {
+      return <>{strings?.searchEnterText}</>;
+    }
+
+    if (results.searchType === "none") {
+      return <>{strings?.searchLoadingIndex}</>;
+    }
+
     const q = query.trim();
-    if (results.length === 0) {
+    if (!results.hits.length) {
       return <>{strings?.get("searchNoResults", q)}</>;
+    }
+
+    if (results.searchType === "fullText") {
+      return (
+        <>
+          {results.hits.length === 1
+            ? strings?.get("searchShowingOneResult", q)
+            : strings?.get("searchShowingResults", results.hits.length, q)}
+        </>
+      );
     }
 
     return (
       <>
-        {results.length === 1
-          ? strings?.get("searchShowingOneResult", q)
-          : strings?.get("searchShowingResults", results.length, q)}
+        {results.hits.length === 1
+          ? strings?.get("searchListingOneVerse", q)
+          : strings?.get("searchListingVerses", q)}
       </>
     );
-  }, [error, loading, query, results.length, strings]);
+  }, [error, loading, query, results, strings]);
 
   return (
     <Transition
@@ -66,14 +85,14 @@ export const SearchOverlay: React.FC<{
             </LinkButton>
           </Group>
 
-          {!loading && !error && results.length > 0 && (
+          {!loading && !error && !!results?.hits.length && (
             <ul
               className={styles.results}
               onClick={(e) => {
                 e.stopPropagation();
               }}
             >
-              {results.map((hit, index) => {
+              {results.hits.map((hit, index) => {
                 const displayVref =
                   BkNumChapters[BkAbbrNum[hit.abbr]] === 1
                     ? String(hit.ch)

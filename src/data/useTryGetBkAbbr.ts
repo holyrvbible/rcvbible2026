@@ -64,7 +64,27 @@ export function tryGetBkAbbr(
   bkAnyName: string,
   lookupMap: LookupMap,
 ): BkAbbr | undefined {
-  return (
-    lookupMap.get(bkAnyName) ?? lookupMap.get(bkAnyName.toLocaleLowerCase())
-  );
+  if (bkAnyName.length < 3) {
+    return undefined;
+  }
+
+  let abbr = lookupMap.get(bkAnyName);
+  if (abbr) {
+    return abbr;
+  }
+
+  const lc = bkAnyName.toLocaleLowerCase();
+  abbr = lookupMap.get(lc);
+  if (abbr) {
+    return abbr;
+  }
+
+  // Get by prefix.
+  for (const [bkName, abbr] of Object.entries(lookupMap)) {
+    if (bkName.startsWith(lc)) {
+      return abbr as BkAbbr;
+    }
+  }
+
+  return undefined;
 }

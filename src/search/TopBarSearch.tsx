@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./TopBarSearch.module.css";
 import { useLocale } from "../data/useLocale";
 import { useStrings } from "../data/useStrings";
 import { SearchOverlay } from "./SearchOverlay";
-import { useBibleSearch } from "./useBibleSearch";
+import { useBibleSearch, type SearchResults } from "./useBibleSearch";
 import { IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useAtom } from "jotai";
@@ -141,7 +141,15 @@ const TopBarSearchOverlay: React.FC<{
   const { locale } = useLocale();
   // The useBibleSearch() hook triggers the search index load.
   const { search, loading, error } = useBibleSearch(locale);
-  const results = useMemo(() => search(query), [query, search]);
+  const [results, setResults] = useState<SearchResults>();
+
+  useEffect(() => {
+    async function run() {
+      setResults(await search(query));
+    }
+
+    void run();
+  }, [query, search]);
 
   return (
     <SearchOverlay
