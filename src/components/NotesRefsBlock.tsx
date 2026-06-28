@@ -34,9 +34,14 @@ export const NotesRefsBlock: React.FC<{
   setShowNotesRefs,
 }) => {
   const strings = useStrings();
+
+  if (!notesRefsItems?.length) {
+    return null;
+  }
+
   const anyExpanded =
     showAllNotes ||
-    !!notesRefsItems?.some(({ sup }) => {
+    notesRefsItems.some(({ sup }) => {
       const id = supId(vn, sup);
       return showNotesRefs.has(id);
     });
@@ -53,7 +58,7 @@ export const NotesRefsBlock: React.FC<{
         fontSize: "95%",
       }}
     >
-      {notesRefsItems?.map(({ sup, word, vrefs, lines }) => {
+      {notesRefsItems.map(({ sup, word, vrefs, lines }) => {
         const id = supId(vn, sup);
 
         // Make additional id jump targets for each sup character.
