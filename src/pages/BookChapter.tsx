@@ -235,6 +235,39 @@ const ReadyAndValid: React.FC<{
     [setShowNotesRefs],
   );
 
+  const allSupIds = useMemo(() => {
+    const supIds: string[] = [];
+
+    const chTitleNotesItems = bookData.chTitleNote?.[String(ch)];
+    if (chTitleNotesItems?.length) {
+      for (const titleNote of chTitleNotesItems) {
+        const id = supId("Title", titleNote.sup);
+        supIds.push(id);
+      }
+    }
+
+    for (const chVerse of chVerses) {
+      const vn = chVerse.vref.split(":")[1];
+      for (const supAndWord of chVerse.vtextWithSups) {
+        if (typeof supAndWord === "string") continue; // vtext
+        const id = supId(vn, supAndWord.sup); // sup+word
+        supIds.push(id);
+      }
+    }
+
+    return supIds;
+  }, [bookData.chTitleNote, ch, chVerses]);
+
+  const onShowAllNotesRefsClick = useCallback(() => {
+    setShowAllNotes((v) => !v);
+
+    if (showAllNotes) {
+      setShowNotesRefs(new Set());
+    } else {
+      setShowNotesRefs(new Set(allSupIds));
+    }
+  }, [allSupIds, setShowAllNotes, setShowNotesRefs, showAllNotes]);
+
   const bkNames = bookNames[abbr];
 
   // Outlines at verse "-1" are for Psalm book titles.
@@ -301,20 +334,13 @@ const ReadyAndValid: React.FC<{
       <Space h={10} />
 
       <Center>
-        <LinkButton
-          to=""
-          onClick={() => {
-            setShowAllNotes((v) => !v);
-            setShowNotesRefs(new Set());
-          }}
-        >
+        <LinkButton to="" onClick={onShowAllNotesRefsClick}>
           <Checkbox
             checked={showAllNotes}
             onClick={(e) => {
               // e.preventDefault(); --> will cause this to not work
               e.stopPropagation();
-              setShowAllNotes((v) => !v);
-              setShowNotesRefs(new Set());
+              onShowAllNotesRefsClick();
             }}
             styles={{
               input: {
@@ -342,7 +368,6 @@ const ReadyAndValid: React.FC<{
         ch={ch}
         bookData={bookData}
         tryGetBkAbbr={tryGetBkAbbr}
-        showAllNotes={showAllNotes}
         showNotesRefs={showNotesRefs}
         setShowNotesRefs={setShowNotesRefs}
       />
@@ -437,7 +462,6 @@ const ReadyAndValid: React.FC<{
               vn={vn}
               notesRefsItems={notesRefsItems}
               tryGetBkAbbr={tryGetBkAbbr}
-              showAllNotes={showAllNotes}
               showNotesRefs={showNotesRefs}
               setShowNotesRefs={setShowNotesRefs}
             />

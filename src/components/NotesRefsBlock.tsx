@@ -19,7 +19,6 @@ export const NotesRefsBlock: React.FC<{
   vn: string;
   notesRefsItems: NotesRefsItem[] | undefined;
   tryGetBkAbbr: TryGetBkAbbrFn;
-  showAllNotes: boolean;
   showNotesRefs: Set<string>;
   setShowNotesRefs: (value: SetStateAction<Set<string>>) => void;
 }> = ({
@@ -29,7 +28,6 @@ export const NotesRefsBlock: React.FC<{
   vn,
   notesRefsItems,
   tryGetBkAbbr,
-  showAllNotes,
   showNotesRefs,
   setShowNotesRefs,
 }) => {
@@ -39,12 +37,10 @@ export const NotesRefsBlock: React.FC<{
     return null;
   }
 
-  const anyExpanded =
-    showAllNotes ||
-    notesRefsItems.some(({ sup }) => {
-      const id = supId(vn, sup);
-      return showNotesRefs.has(id);
-    });
+  const anyExpanded = notesRefsItems.some(({ sup }) => {
+    const id = supId(vn, sup);
+    return showNotesRefs.has(id);
+  });
 
   return (
     <div
@@ -68,7 +64,7 @@ export const NotesRefsBlock: React.FC<{
 
         return (
           <Fragment key={sup}>
-            <Collapse expanded={showAllNotes || showNotesRefs.has(id)}>
+            <Collapse expanded={showNotesRefs.has(id)}>
               <div id={id}>
                 {moreIds.map((id) => (
                   <span key={id} id={id} />
