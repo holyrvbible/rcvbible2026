@@ -94,6 +94,7 @@ export const TopBar: React.FC = () => {
   const strings = useStrings();
   const [opened, { toggle, close }] = useDisclosure();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const closeSearchOverlayRef = useRef<(() => void) | null>(null);
   const navigate = useNavigate();
 
   return (
@@ -113,7 +114,10 @@ export const TopBar: React.FC = () => {
           </div>
         </div>
 
-        <TopBarSearch searchInputRef={searchInputRef} />
+        <TopBarSearch
+          searchInputRef={searchInputRef}
+          closeSearchOverlayRef={closeSearchOverlayRef}
+        />
 
         {/* Take up the same space as on the left side */}
         <div className={clsx(styles.buttonsGroup, styles.rightAlign)}>
@@ -124,6 +128,7 @@ export const TopBar: React.FC = () => {
               tabIndex={0}
               onClick={() => {
                 void navigate("/");
+                closeSearchOverlayRef.current?.();
               }}
             >
               <IconHome stroke={2} size={ICON_SIZE} />

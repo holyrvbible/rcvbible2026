@@ -11,7 +11,8 @@ import { searchTextAtom } from "./searchTextAtom";
 
 export const TopBarSearch: React.FC<{
   searchInputRef: RefObject<HTMLInputElement | null>;
-}> = ({ searchInputRef }) => {
+  closeSearchOverlayRef: RefObject<(() => void) | null>;
+}> = ({ searchInputRef, closeSearchOverlayRef }) => {
   const strings = useStrings();
   const [searchText, setSearchText] = useAtom(searchTextAtom);
   const [searchActivated, setSearchActivated] = useState(false);
@@ -22,6 +23,10 @@ export const TopBarSearch: React.FC<{
     searchInputRef.current?.blur();
     setOverlayOpened(false);
   }, [searchInputRef]);
+
+  useEffect(() => {
+    closeSearchOverlayRef.current = onClose;
+  }, [closeSearchOverlayRef, onClose]);
 
   useEffect(() => {
     if (!searchText.trim()) return;
