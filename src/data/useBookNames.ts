@@ -4,6 +4,11 @@ import type { LocaleBookNames, SupportedLocale } from "./localeTypes";
 const cache: Partial<Record<SupportedLocale, LocaleBookNames>> = {};
 
 export async function importBookNames(locale: SupportedLocale) {
+  const cached = cache[locale];
+  if (cached) {
+    return { default: cached };
+  }
+
   switch (locale) {
     case "en-US":
       return import(`./en-US/bookNames`);

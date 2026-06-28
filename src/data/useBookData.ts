@@ -15,6 +15,13 @@ export async function importBookData(
   locale: SupportedLocale,
   abbr: BkAbbr,
 ): Promise<{ data: BookData }> {
+  const cacheKey = getCacheKey(locale, abbr);
+  const cached = cache[cacheKey];
+
+  if (cached) {
+    return { data: cached };
+  }
+
   // Use constant import paths for full type-checking.
   switch (locale) {
     case "en-US":
