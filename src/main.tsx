@@ -5,11 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { StrictMode, Suspense, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Home } from "./pages/Home";
-import { BkAbbr } from "./data/bibleMetadata";
 import { PageSpinner } from "./components/PageSpinner";
 import { BookLazy } from "./pages/BookLazy";
 import { NotFoundLazy } from "./pages/NotFoundLazy";
-import { BooChapterLazy } from "./pages/BookChapterLazy";
+import { BookChapterLazy } from "./pages/BookChapterLazy";
 import { Layout } from "./layout/Layout";
 import { useIsMobile } from "./utils/useIsMobile";
 import { useStrings } from "./data/useStrings";
@@ -34,32 +33,34 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "index.html", element: <Home /> },
 
-      // Add one page per book.
-      ...BkAbbr.map((abbr) => ({
-        path: abbr.toLowerCase(),
-        element: (
-          <Suspense>
-            <BookLazy abbr={abbr} />
-          </Suspense>
-        ),
-      })),
-
-      // Add book chapters.
-      ...BkAbbr.map((abbr) => ({
-        path: `${abbr.toLowerCase()}/:chapter`,
-        element: (
-          <Suspense>
-            <BooChapterLazy abbr={abbr} />
-          </Suspense>
-        ),
-      })),
-
       // Used for debugging only.
       {
         path: "spin",
         element: (
           <Suspense>
             <PageSpinner />
+          </Suspense>
+        ),
+      },
+
+      // --- Make sure to put all named routes above this line. ---
+
+      // Add book overviews.
+      {
+        path: `:abbr`,
+        element: (
+          <Suspense>
+            <BookLazy />
+          </Suspense>
+        ),
+      },
+
+      // Add book chapters.
+      {
+        path: `:abbr/:chapter`,
+        element: (
+          <Suspense>
+            <BookChapterLazy />
           </Suspense>
         ),
       },

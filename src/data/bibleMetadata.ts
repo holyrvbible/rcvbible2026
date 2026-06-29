@@ -71,6 +71,11 @@ export const BkAbbr = [
 
 export type BkAbbr = (typeof BkAbbr)[number];
 
+// Lookup from lowercase bk abbr to proper abbr.
+export const BkAbbrFromLower = Object.fromEntries(
+  BkAbbr.map((abbr) => [abbr.toLocaleLowerCase(), abbr]),
+) as Record<string, BkAbbr>;
+
 export const BkAbbrNum = Object.fromEntries(
   Object.values(BkAbbr).map((abbr, i) => [abbr, i]),
 ) as Record<BkAbbr, number>;

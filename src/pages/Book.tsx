@@ -22,8 +22,15 @@ import { LinkButton } from "../components/LinkButton";
 import { scrollToTop } from "../utils/scrollToElement";
 import { SmoothTooltip } from "../components/SmoothTooltip";
 import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
+import { useRouteBkAbbr } from "../utils/useRouteBkAbbr";
 
-const Book: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
+const Book: React.FC = () => {
+  const abbr = useRouteBkAbbr();
+  if (!abbr) return <PageSpinner />;
+  return <ParamsValid abbr={abbr} />;
+};
+
+const ParamsValid: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
   const { locale } = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);

@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { BkAbbr, BkAbbrNum, BkNumChapters } from "../data/bibleMetadata";
 import {
   Fragment,
@@ -44,14 +44,36 @@ import type { LocaleBookNames } from "../data/localeTypes";
 import { SmoothTooltip } from "../components/SmoothTooltip";
 import { useHideSups } from "../utils/useHideSups";
 import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
+import { useRouteBkAbbr } from "../utils/useRouteBkAbbr";
+import { useRouteNumParam } from "../utils/useRouteNumParam";
 
-const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
-  const params = useParams();
-  const chapter = params.chapter;
+const BookChapter: React.FC = () => {
+  const abbr = useRouteBkAbbr();
+  const chapter = useRouteNumParam("chapter");
 
-  const [ch, setCh] = useState<number>();
-  const [isValid, setIsValid] = useState<boolean>();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!abbr) {
+      void navigate(`/404`);
+      return;
+    }
+
+    const numChapters = BkNumChapters[BkAbbrNum[abbr]];
+
+    if (typeof chapter !== "number" || chapter < 1 || chapter > numChapters) {
+      void navigate(`/404`);
+    }
+  }, [abbr, chapter, navigate]);
+
+  if (!abbr || !chapter) {
+    return <PageSpinner />;
+  }
+
+  return <ParamsValid abbr={abbr} ch={chapter} />;
+};
+
+const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
   const { locale } = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
@@ -62,57 +84,7 @@ const BookChapter: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
     () => new Set(),
   );
 
-  const numChapters = BkNumChapters[BkAbbrNum[abbr]];
-
-  useEffect(() => {
-    let canceled = false;
-
-    async function init() {
-      // Meaningless await to allow setting state within useEffect.
-      await Promise.resolve();
-
-      if (!chapter?.match(/^\d+$/)) {
-        if (!canceled) setIsValid(false);
-        return;
-      }
-
-      const num = Number(chapter);
-
-      if (num < 1 || num > numChapters) {
-        if (!canceled) setIsValid(false);
-        return;
-      }
-
-      if (!canceled) {
-        setIsValid(true);
-        setCh(num);
-      }
-    }
-
-    void init();
-
-    return () => {
-      canceled = true;
-    };
-  }, [abbr, chapter, numChapters]);
-
-  if (isValid === false) {
-    if (!strings) {
-      return <PageSpinner />;
-    }
-
-    return (
-      <div>
-        {strings.get(
-          "noSuchChapter",
-          chapter ?? "?",
-          bookNames?.[abbr].full ?? abbr,
-        )}
-      </div>
-    );
-  }
-
-  if (typeof ch !== "number" || !bookNames || !bookData || !strings) {
+  if (!bookNames || !bookData || !strings) {
     return <PageSpinner />;
   }
 
