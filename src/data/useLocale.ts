@@ -1,7 +1,8 @@
-import { useCallback } from "react";
-import type { SupportedLocale } from "./localeTypes";
+import { useCallback, useEffect } from "react";
+import { SupportedLocales, type SupportedLocale } from "./localeTypes";
 import { atomWithStorage } from "jotai/utils";
 import { useAtom } from "jotai";
+import { useLocation, useNavigate } from "react-router";
 
 function findBestMatchingLanguage(): SupportedLocale {
   const lang = navigator.language;
@@ -10,7 +11,7 @@ function findBestMatchingLanguage(): SupportedLocale {
 
 const DEFAULT_LOCALE = findBestMatchingLanguage();
 
-const localeAtom = atomWithStorage<SupportedLocale>(
+export const localeAtom = atomWithStorage<SupportedLocale>(
   "currentLocale",
   DEFAULT_LOCALE,
   undefined,
@@ -27,22 +28,30 @@ const altLocaleAtom = atomWithStorage<SupportedLocale>(
 export function useLocale() {
   const [locale, setLocaleOrig] = useAtom(localeAtom);
   const [altLocale, setAltLocaleOrig] = useAtom(altLocaleAtom);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    for (const loc of SupportedLocales) {
+      if (pathname.startsWith("/" + loc)) {
+        if (locale !== loc) {
+          setLocaleOrig(loc);
+          setAltLocaleOrig(loc === "en-US" ? "zh-CN" : "en-US");
+        }
+        return;
+      }
+    }
+
+    void navigate(`/${locale}${pathname}`);
+  }, [locale, navigate, pathname, setAltLocaleOrig, setLocaleOrig]);
 
   const setLocale = useCallback(
     (loc: SupportedLocale) => {
-      setLocaleOrig(loc);
-      setAltLocaleOrig(loc === "en-US" ? "zh-CN" : "en-US");
+      const p = pathname.slice(1 + locale.length);
+      void navigate(`/${loc}${p}`);
     },
-    [setAltLocaleOrig, setLocaleOrig],
+    [locale.length, navigate, pathname],
   );
 
-  const setAltLocale = useCallback(
-    (loc: SupportedLocale) => {
-      setAltLocaleOrig(loc);
-      setLocaleOrig(loc === "en-US" ? "zh-CN" : "en-US");
-    },
-    [setAltLocaleOrig, setLocaleOrig],
-  );
-
-  return { locale, setLocale, altLocale, setAltLocale };
+  return { locale, setLocale, altLocale };
 }

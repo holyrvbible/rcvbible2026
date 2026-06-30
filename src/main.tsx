@@ -12,6 +12,8 @@ import { BookChapterLazy } from "./pages/BookChapterLazy";
 import { Layout } from "./layout/Layout";
 import { useIsMobile } from "./utils/useIsMobile";
 import { useStrings } from "./data/useStrings";
+import { SupportedLocales } from "./data/localeTypes";
+import { RedirectToNotFound } from "./pages/RedirectToNotFound";
 
 const SuspenseFallback: React.FC = () => {
   const strings = useStrings();
@@ -43,6 +45,38 @@ const router = createBrowserRouter([
         ),
       },
 
+      ...SupportedLocales.flatMap((locale) => [
+        // Add locale home page.
+        {
+          path: locale,
+          element: (
+            <Suspense>
+              <Home />
+            </Suspense>
+          ),
+        },
+
+        // Add locale book overviews.
+        {
+          path: `${locale}/:abbr`,
+          element: (
+            <Suspense>
+              <BookLazy />
+            </Suspense>
+          ),
+        },
+
+        // Add locale book chapters.
+        {
+          path: `${locale}/:abbr/:chapter`,
+          element: (
+            <Suspense>
+              <BookChapterLazy />
+            </Suspense>
+          ),
+        },
+      ]),
+
       // --- Make sure to put all named routes above this line. ---
 
       // Add book overviews.
@@ -65,12 +99,22 @@ const router = createBrowserRouter([
         ),
       },
 
+      // Locale 404 pages.
+      ...SupportedLocales.map((locale) => ({
+        path: `${locale}/404`,
+        element: (
+          <Suspense>
+            <NotFoundLazy />
+          </Suspense>
+        ),
+      })),
+
       // Catch-all route - must be last.
       {
         path: "*",
         element: (
           <Suspense>
-            <NotFoundLazy />
+            <RedirectToNotFound />
           </Suspense>
         ),
       },

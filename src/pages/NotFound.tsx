@@ -3,13 +3,18 @@ import { LinkButton } from "../components/LinkButton";
 import { IconHome } from "@tabler/icons-react";
 import { PageSpinner } from "../components/PageSpinner";
 import { useStrings } from "../data/useStrings";
+import { useSearchParams } from "react-router";
 
 const NotFound: React.FC = () => {
   const strings = useStrings();
+  const [searchParams] = useSearchParams();
 
   if (!strings) {
     return <PageSpinner />;
   }
+
+  // This will update on every route change
+  const fromUrl = searchParams.get("url");
 
   return (
     <Stack h="100%" flex={1} justify="center" align="center">
@@ -27,10 +32,11 @@ const NotFound: React.FC = () => {
       >
         <IconHome size={16} /> &nbsp;{strings.takeMeHome}
       </LinkButton>
-      <div style={{ fontStyle: "italic", fontSize: "85%" }}>
-        <span style={{ fontWeight: 550 }}>Requested URL:</span>{" "}
-        {window.location.href}
-      </div>
+      {!!fromUrl && (
+        <div style={{ fontStyle: "italic", fontSize: "85%" }}>
+          <span style={{ fontWeight: 550 }}>Requested URL:</span> {fromUrl}
+        </div>
+      )}
       <Space h="30vh" />
     </Stack>
   );
