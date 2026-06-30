@@ -1,7 +1,13 @@
 import "./main.css";
 import "@mantine/core/styles.css";
 
+import { registerSW } from "virtual:pwa-register";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { installPreloadErrorHandler } from "./utils/installPreloadErrorHandler";
+
+registerSW({ immediate: true });
+installPreloadErrorHandler();
+
 import { StrictMode, Suspense, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Home } from "./pages/Home";

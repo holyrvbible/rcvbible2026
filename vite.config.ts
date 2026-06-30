@@ -33,7 +33,10 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       workbox: {
-        navigateFallbackDenylist: [/^\/.*\.((txt)|(ico)|(png))$/],
+        // Always fetch index.html from the network so chunk hashes stay current.
+        globIgnores: ["**/*.html"],
+        navigateFallback: null,
+        cleanupOutdatedCaches: true,
       },
       manifest: {
         name: "Holy Bible Recovery Version 2026",
