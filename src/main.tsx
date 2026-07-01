@@ -55,11 +55,11 @@ const router = createBrowserRouter([
         // Add locale home page.
         {
           path: locale,
-          element: (
-            <Suspense>
-              <Home />
-            </Suspense>
-          ),
+          element: <Home />,
+        },
+        {
+          path: `${locale}/index.html`,
+          element: <Home />,
         },
 
         // Add locale book overviews.
