@@ -10,7 +10,7 @@ import {
   type SetStateAction,
 } from "react";
 import { PageSpinner } from "../components/PageSpinner";
-import { useLocale } from "../data/useLocale";
+import { useAltLocale, useLocale } from "../data/useLocale";
 import { useStrings, type StringsResult } from "../data/useStrings";
 import { useBookData } from "../data/useBookData";
 import { useBookNames } from "../data/useBookNames";
@@ -74,7 +74,7 @@ const BookChapter: React.FC = () => {
 };
 
 const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
   const strings = useStrings();
@@ -125,7 +125,7 @@ const ReadyAndValid: React.FC<{
   setShowNotesRefs,
 }) => {
   // altLocale data is optional to render the page (load async).
-  const { altLocale } = useLocale();
+  const altLocale = useAltLocale();
   const [bilingual] = useBilingual();
   const [hideSups] = useHideSups();
   const altBookNames = useBookNames(altLocale);

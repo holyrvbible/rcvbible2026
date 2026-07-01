@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { SupportedLocales, type SupportedLocale } from "./localeTypes";
 import { atomWithStorage } from "jotai/utils";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useLocation, useNavigate } from "react-router";
 
 function findBestMatchingLanguage(): SupportedLocale {
@@ -11,7 +11,7 @@ function findBestMatchingLanguage(): SupportedLocale {
 
 const DEFAULT_LOCALE = findBestMatchingLanguage();
 
-export const localeAtom = atomWithStorage<SupportedLocale>(
+const localeAtom = atomWithStorage<SupportedLocale>(
   "currentLocale",
   DEFAULT_LOCALE,
   undefined,
@@ -25,9 +25,9 @@ const altLocaleAtom = atomWithStorage<SupportedLocale>(
   { getOnInit: true },
 );
 
-export function useLocale() {
+export function useInitLocale() {
   const [locale, setLocaleOrig] = useAtom(localeAtom);
-  const [altLocale, setAltLocaleOrig] = useAtom(altLocaleAtom);
+  const setAltLocaleOrig = useSetAtom(altLocaleAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -42,16 +42,28 @@ export function useLocale() {
       }
     }
 
-    void navigate(`/${locale}${pathname}`);
+    void navigate(`/${locale}${pathname}`, { replace: true });
   }, [locale, navigate, pathname, setAltLocaleOrig, setLocaleOrig]);
+}
 
-  const setLocale = useCallback(
+export function useLocale() {
+  return useAtomValue(localeAtom);
+}
+
+export function useAltLocale() {
+  return useAtomValue(altLocaleAtom);
+}
+
+export function useSetLocale() {
+  const locale = useAtomValue(localeAtom);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  return useCallback(
     (loc: SupportedLocale) => {
       const p = pathname.slice(1 + locale.length);
       void navigate(`/${loc}${p}`);
     },
     [locale.length, navigate, pathname],
   );
-
-  return { locale, setLocale, altLocale };
 }

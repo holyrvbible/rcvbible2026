@@ -40,7 +40,7 @@ const VrefTooltip2: React.FC<
     vn: number;
   } & TooltipPropsNoLabel
 > = ({ abbr, ch, vn, ...tooltipProps }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
 

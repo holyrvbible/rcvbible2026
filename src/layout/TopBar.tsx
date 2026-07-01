@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router";
 import styles from "./TopBar.module.css";
-import { IconHome, IconMenu2 } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconHome,
+  IconMenu2,
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import { TopBarSearch } from "../search/TopBarSearch";
 import { useDisclosure } from "@mantine/hooks";
@@ -29,6 +34,20 @@ export const TopBar: React.FC = () => {
             >
               <IconMenu2 stroke={2} size={ICON_SIZE} />
             </div>
+            <div
+              className={styles.button}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  void navigate(-1);
+                } else {
+                  void navigate("/"); // fallback route
+                }
+              }}
+            >
+              <IconArrowLeft stroke={2} size={ICON_SIZE} />
+            </div>
           </div>
         </div>
 
@@ -40,6 +59,16 @@ export const TopBar: React.FC = () => {
         {/* Take up the same space as on the left side */}
         <div className={clsx(styles.buttonsGroup, styles.rightAlign)}>
           <div className={styles.buttonsGroupInnerWrapper}>
+            <div
+              className={styles.button}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                void navigate(1);
+              }}
+            >
+              <IconArrowRight stroke={2} size={ICON_SIZE} />
+            </div>
             <div
               className={styles.button}
               role="button"

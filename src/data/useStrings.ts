@@ -10,7 +10,7 @@ export type StringsResult = StringsData & {
 };
 
 export function useStrings(): StringsResult | null {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const [strings, setStrings] = useState<StringsData>();
 
   useEffect(() => {

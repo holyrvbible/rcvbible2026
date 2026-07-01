@@ -93,7 +93,7 @@ const NewGroups: BookGroups = [
 ];
 
 export const Home: React.FC = () => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
   const strings = useStrings();
 

@@ -3,8 +3,11 @@ import { TopBar } from "./TopBar";
 import { Outlet } from "react-router";
 import { MantineProvider } from "@mantine/core";
 import { AutoScrollToHash } from "../components/AutoScrollToHash";
+import { useInitLocale } from "../data/useLocale";
 
 export const Layout: React.FC = () => {
+  useInitLocale();
+
   return (
     <MantineProvider>
       <div className={styles.root}>

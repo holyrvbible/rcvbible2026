@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
-import { localeAtom } from "../data/useLocale";
-import { useAtomValue } from "jotai";
+import { useLocale } from "../data/useLocale";
 
 /** Read a route param as a number (positive integers only). */
 export function useRouteNumParam(paramName: string) {
-  const locale = useAtomValue(localeAtom);
+  const locale = useLocale();
   const maybeParam = useParams()[paramName];
   const navigate = useNavigate();
   const num =

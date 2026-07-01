@@ -1,10 +1,9 @@
-import { useAtomValue } from "jotai";
-import { localeAtom } from "../data/useLocale";
+import { useLocale } from "../data/useLocale";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export const RedirectToNotFound: React.FC = () => {
-  const locale = useAtomValue(localeAtom);
+  const locale = useLocale();
   const navigate = useNavigate();
 
   useEffect(() => {

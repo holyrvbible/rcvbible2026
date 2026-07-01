@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import styles from "./TopBarMenu.module.css";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import clsx from "clsx";
-import { useLocale } from "../data/useLocale";
+import { useLocale, useSetLocale } from "../data/useLocale";
 import { useStrings } from "../data/useStrings";
 import { usePageZoom } from "../utils/usePageZoom";
 import { useBilingual } from "../utils/useBilingual";
@@ -91,7 +91,7 @@ export const TopBarMenu: React.FC<{
   onClose: () => void;
   searchInputRef: RefObject<HTMLInputElement | null>;
 }> = ({ opened, onClose, searchInputRef }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
   const strings = useStrings();
 
@@ -129,7 +129,8 @@ const MenuOptions: React.FC<{
   searchInputRef: RefObject<HTMLInputElement | null>;
 }> = ({ searchInputRef }) => {
   const { zoomIn, zoomOut, zoomPercent, setZoomPercent } = usePageZoom();
-  const { locale, setLocale } = useLocale();
+  const locale = useLocale();
+  const setLocale = useSetLocale();
   const [bilingual, setBilingual] = useBilingual();
   const [hideSups, setHideSups] = useHideSups();
   const strings = useStrings();

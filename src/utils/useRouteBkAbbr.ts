@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { BkAbbrFromLower } from "../data/bibleMetadata";
-import { localeAtom } from "../data/useLocale";
-import { useAtomValue } from "jotai";
+import { useLocale } from "../data/useLocale";
 
 /** Read the book abbreviation from the ":abbr" route param. */
 export function useRouteBkAbbr() {
-  const locale = useAtomValue(localeAtom);
+  const locale = useLocale();
   const maybeAbbr = useParams().abbr;
   const navigate = useNavigate();
   const abbr = maybeAbbr && BkAbbrFromLower[maybeAbbr.toLocaleLowerCase()];

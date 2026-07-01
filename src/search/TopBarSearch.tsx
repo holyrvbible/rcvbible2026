@@ -142,7 +142,7 @@ const TopBarSearchOverlay: React.FC<{
   query: string;
   onClose: () => void;
 }> = ({ opened, query, onClose }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   // The useBibleSearch() hook triggers the search index load.
   const { search, loading, error } = useBibleSearch(locale);
   const [results, setResults] = useState<SearchResults>();

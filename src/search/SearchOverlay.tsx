@@ -22,7 +22,7 @@ export const SearchOverlay: React.FC<{
   onClose: () => void;
 }> = ({ opened, query, results, loading, error, onClose }) => {
   const strings = useStrings();
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
 
   const status = useMemo(() => {

@@ -9,7 +9,7 @@ import { getNextBook, getPrevBook, linkTo } from "../utils/links";
 export const BookTopBar: React.FC<{
   abbr: BkAbbr;
 }> = ({ abbr }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
 
   const prevAbbr = getPrevBook(abbr);

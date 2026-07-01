@@ -31,7 +31,7 @@ const Book: React.FC = () => {
 };
 
 const ParamsValid: React.FC<{ abbr: BkAbbr }> = ({ abbr }) => {
-  const { locale } = useLocale();
+  const locale = useLocale();
   const bookNames = useBookNames(locale);
   const bookData = useBookData(locale, abbr);
   const strings = useStrings();
