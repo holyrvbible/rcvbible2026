@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { Group, Loader, Transition } from "@mantine/core";
 import styles from "./SearchOverlay.module.css";
 import { linkTo } from "../utils/links";
@@ -93,7 +92,7 @@ export const SearchOverlay: React.FC<{
                 e.stopPropagation();
               }}
             >
-              {results.hits.map((hit, index) => {
+              {results.hits.map((hit) => {
                 const displayVref =
                   BkNumChapters[BkAbbrNum[hit.abbr]] === 1
                     ? String(hit.ch)
@@ -102,26 +101,19 @@ export const SearchOverlay: React.FC<{
                 const href = linkTo(hit.abbr, hit.ch, hit.vn);
 
                 return (
-                  <li key={hit.id}>
-                    <Link
-                      className={styles.resultLink}
+                  <li key={hit.id} className={styles.result}>
+                    <LinkButton
+                      className={styles.ref}
                       to={href}
-                      onClick={() => {
-                        onClose();
-                      }}
+                      onClick={onClose}
                     >
-                      <div className={styles.ref}>
-                        <span>
-                          {bookNames?.[hit.abbr]?.ref} {displayVref}
-                        </span>
-                        <span className={styles.numbering}>#{index + 1}</span>
-                      </div>
-                      <div className={styles.snippet}>
-                        {results.searchType === "fullText"
-                          ? highlightSearchText(hit.text, query, locale)
-                          : hit.text}
-                      </div>
-                    </Link>
+                      {bookNames?.[hit.abbr]?.ref} {displayVref}
+                    </LinkButton>
+                    <span className={styles.snippet}>
+                      {results.searchType === "fullText"
+                        ? highlightSearchText(hit.text, query, locale)
+                        : hit.text}
+                    </span>
                   </li>
                 );
               })}

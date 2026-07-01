@@ -37,47 +37,26 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 
-.resultLink {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  line-height: 1.2;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+.result {
+  padding: 0 4px;
+  line-height: 1.4;
+  margin-left: 16px;
 }
 
-.resultLink:hover {
-  background-color: #f5f7fa;
-  border-color: #bbb;
-}
-
-.ref {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: sans-serif;
+.ref,
+.ref:visited {
+  display: inline-flex;
   font-weight: 600;
-  font-size: 92%;
-  color: #0c850a;
-  margin-bottom: 4px;
-}
-
-.numbering {
-  font-family: serif;
-  color: blue;
-  font-style: italic;
+  color: #3a51c7;
+  margin-left: -22px;
+  margin-right: 2px;
 }
 
 .snippet {
-  font-family: serif;
-  font-size: 105%;
-  color: #222;
+  color: #555;
 }
 
 .highlight {
