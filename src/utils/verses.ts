@@ -43,7 +43,7 @@ export function parseVref(vref: string): Vref {
 
   let sup: string | null = null;
   if (s.includes("^")) {
-    const [prefix, supStr] = s.split(":");
+    const [prefix, supStr] = s.split("^");
     sup = supStr;
     s = prefix;
   }

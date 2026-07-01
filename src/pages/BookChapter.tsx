@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { BkAbbr, BkAbbrNum, BkNumChapters } from "../data/bibleMetadata";
 import {
   Fragment,
@@ -21,7 +21,7 @@ import { FadeLine } from "../components/FadeLine";
 import { useShowAllNotes } from "../utils/useShowAllNotes";
 import type { BookData, NotesRefsItem, OutlineItem } from "../data/booksTypes";
 import { LinkButton } from "../components/LinkButton";
-import { scrollToTop } from "../utils/scrollToElement";
+import { jumpToElement, scrollToTop } from "../utils/scrollToElement";
 import { useChapterLinksOpened } from "../components/chapterLinksAtom";
 import {
   ChapterLinksPopup,
@@ -46,6 +46,7 @@ import { useHideSups } from "../utils/useHideSups";
 import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 import { useRouteBkAbbr } from "../utils/useRouteBkAbbr";
 import { useRouteNumParam } from "../utils/useRouteNumParam";
+import { useGlowOnce } from "../utils/useGlowOnce";
 
 const BookChapter: React.FC = () => {
   const abbr = useRouteBkAbbr();
@@ -131,6 +132,8 @@ const ReadyAndValid: React.FC<{
   const altBookNames = useBookNames(altLocale);
   const altBookData = useBookData(altLocale, abbr);
   const tryGetBkAbbr = useTryGetBkAbbr(bookNames);
+  const { hash } = useLocation();
+  const glowOnce = useGlowOnce();
 
   const { opened: chLinksOpened, toggle: onToggleChLinksOpened } =
     useChapterLinksOpened();
@@ -139,6 +142,21 @@ const ReadyAndValid: React.FC<{
   const numChapters = BkNumChapters[BkAbbrNum[abbr]];
 
   useSetDocumentTitle(bookNames[abbr].full + " " + chStr);
+
+  // Remove the '#v' prefix.
+  const hashSupId = hash.includes("^") ? hash.slice(2) : "";
+
+  useEffect(() => {
+    if (!hashSupId) return;
+
+    setShowNotesRefs((old) => {
+      const newState = new Set(old);
+      newState.add(hashSupId);
+      return newState;
+    });
+
+    jumpToElement(hashSupId, glowOnce);
+  }, [glowOnce, hashSupId, setShowNotesRefs]);
 
   const chVerses = useMemo(() => {
     const chPrefix = chStr + ":";

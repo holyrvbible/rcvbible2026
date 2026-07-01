@@ -28,7 +28,7 @@ const altLocaleAtom = atomWithStorage<SupportedLocale>(
 export function useInitLocale() {
   const [locale, setLocaleOrig] = useAtom(localeAtom);
   const setAltLocaleOrig = useSetAtom(altLocaleAtom);
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,8 +42,16 @@ export function useInitLocale() {
       }
     }
 
-    void navigate(`/${locale}${pathname}`, { replace: true });
-  }, [locale, navigate, pathname, setAltLocaleOrig, setLocaleOrig]);
+    void navigate(`/${locale}${pathname}${search}${hash}`, { replace: true });
+  }, [
+    hash,
+    locale,
+    navigate,
+    pathname,
+    search,
+    setAltLocaleOrig,
+    setLocaleOrig,
+  ]);
 }
 
 export function useLocale() {
