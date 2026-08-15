@@ -7,6 +7,7 @@ import {
   getPrevChapterOrOverview,
   vLink,
 } from "../utils/links";
+import { scrollToTop } from "../utils/scrollToElement";
 
 export const PrevNextChapterLinks: React.FC<{
   abbr: BkAbbr;
@@ -18,6 +19,7 @@ export const PrevNextChapterLinks: React.FC<{
     <>
       <LinkButton
         to={vLink(getPrevChapterOrOverview(abbr, ch))}
+        onClick={scrollToTop}
         style={{
           padding: `2px`,
           border: "1px solid #ccc",
@@ -31,6 +33,7 @@ export const PrevNextChapterLinks: React.FC<{
 
       <LinkButton
         to={vLink(getNextChapterOrOverview(abbr, ch))}
+        onClick={scrollToTop}
         style={{
           padding: "2px",
           border: "1px solid #ccc",
