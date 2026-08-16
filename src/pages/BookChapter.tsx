@@ -52,6 +52,14 @@ import {
   stopSpeaking,
   type TextOrAction,
 } from "../utils/readAloud";
+import {
+  IconNotes,
+  IconPlayerPlay,
+  IconPlayerStopFilled,
+  IconTextSize,
+} from "@tabler/icons-react";
+
+const BUTTON_ICON_SIZE = 18;
 
 const BookChapter: React.FC = () => {
   const abbr = useRouteBkAbbr();
@@ -403,6 +411,8 @@ const ReadyAndValid: React.FC<{
 
       <Group gap={8} justify="center">
         <LinkButton variant="outline" to="" onClick={onShowAllNotesRefsClick}>
+          <IconNotes size={BUTTON_ICON_SIZE} />
+          &nbsp;
           {strings.toggleAllNotes}
         </LinkButton>
 
@@ -413,6 +423,12 @@ const ReadyAndValid: React.FC<{
             setShowSuperscripts((v) => !v);
           }}
         >
+          {showSuperscripts ? (
+            <IconTextSize size={BUTTON_ICON_SIZE} />
+          ) : (
+            <IconTextSize size={BUTTON_ICON_SIZE} />
+          )}
+          &nbsp;
           {showSuperscripts
             ? strings.hideSuperscripts
             : strings.showSuperscripts}
@@ -429,6 +445,12 @@ const ReadyAndValid: React.FC<{
             }
           }}
         >
+          {isSpeaking ? (
+            <IconPlayerStopFilled size={BUTTON_ICON_SIZE} />
+          ) : (
+            <IconPlayerPlay size={BUTTON_ICON_SIZE} />
+          )}
+          &nbsp;
           {isSpeaking ? strings.stopReading : strings.readAloud}
         </LinkButton>
       </Group>
