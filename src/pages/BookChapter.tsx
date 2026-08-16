@@ -310,39 +310,49 @@ const ReadyAndValid: React.FC<{
     });
   }, [allSupIds, setShowNotesRefs]);
 
-  const readAloud = useCallback(async () => {
-    setIsSpeaking(true);
+  const readAloud = useCallback(
+    async (startVn?: string | number) => {
+      const startVnNum = startVn ? Number(startVn) : 0;
 
-    try {
-      const chPrefix = chStr + ":";
-      const entries = Object.entries(bookData.verses).filter(([k]) =>
-        k.startsWith(chPrefix),
-      );
-      const readableLines: TextOrAction[] = [];
+      setIsSpeaking(true);
 
-      for (const [vref, vtext] of entries) {
-        const vn = vref.slice(chPrefix.length);
-        const s =
-          strings.get("verseNumberForSpeaking", vn) +
-          " " +
-          getVersePlainText(vtext);
+      try {
+        const chPrefix = chStr + ":";
+        const entries = Object.entries(bookData.verses).filter(([k]) =>
+          k.startsWith(chPrefix),
+        );
+        const readableLines: TextOrAction[] = [];
 
-        readableLines.push(() => {
-          // Highlight the line but don't focus. This allows the user to
-          // navigate anywhere in the page without interruptions.
-          glowOnce("v" + vn);
+        for (const [vref, vtext] of entries) {
+          const vn = vref.slice(chPrefix.length);
+
+          if (startVnNum && Number(vn) < startVnNum) {
+            continue;
+          }
+
+          const s =
+            strings.get("verseNumberForSpeaking", vn) +
+            " " +
+            getVersePlainText(vtext);
+
+          readableLines.push(() => {
+            // Highlight the line but don't focus. This allows the user to
+            // navigate anywhere in the page without interruptions.
+            glowOnce("v" + vn);
+          });
+
+          readableLines.push(s);
+        }
+
+        await speakLines(readableLines, () => {
+          setIsSpeaking(false);
         });
-
-        readableLines.push(s);
-      }
-
-      await speakLines(readableLines, () => {
+      } finally {
         setIsSpeaking(false);
-      });
-    } finally {
-      setIsSpeaking(false);
-    }
-  }, [bookData.verses, chStr, glowOnce, setIsSpeaking, strings]);
+      }
+    },
+    [bookData.verses, chStr, glowOnce, setIsSpeaking, strings],
+  );
 
   const bkNames = bookNames[abbr];
 
@@ -555,6 +565,15 @@ const ReadyAndValid: React.FC<{
               }}
               onVtextSupClick={(sup) => {
                 onVtextSupClick(vn, sup);
+              }}
+              isSpeaking={isSpeaking}
+              onReadAloud={() => {
+                if (isSpeaking) {
+                  stopSpeaking();
+                  setIsSpeaking(false);
+                } else {
+                  void readAloud(vn);
+                }
               }}
             />
 
