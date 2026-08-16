@@ -373,3 +373,7 @@ export function chColon(abbr: BkAbbr, ch: number) {
     ? null
     : `${String(ch)}:`;
 }
+
+export function getVersePlainText(vtext: string): string {
+  return vtext.replaceAll(/\[.*?\]/g, "").replaceAll(/<.*?>/g, "");
+}

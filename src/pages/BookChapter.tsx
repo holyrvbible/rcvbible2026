@@ -29,6 +29,7 @@ import {
 import { PrevNextChapterLinks } from "../components/PrevNextChapterLinks";
 import { supId } from "../utils/links";
 import {
+  getVersePlainText,
   parseVerseText,
   VERSE_SPLIT_SEPARATOR,
   type VtextWithSups,
@@ -46,6 +47,11 @@ import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 import { useRouteBkAbbr } from "../utils/useRouteBkAbbr";
 import { useRouteNumParam } from "../utils/useRouteNumParam";
 import { useGlowOnce } from "../utils/useGlowOnce";
+import {
+  speakLines,
+  stopSpeaking,
+  type TextOrAction,
+} from "../utils/readAloud";
 
 const BookChapter: React.FC = () => {
   const abbr = useRouteBkAbbr();
@@ -84,13 +90,19 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
   );
 
   const [showSuperscripts, setShowSuperscripts] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Hide all sups when navigated to a new page.
   useEffect(() => {
+    // Hide all sups when navigated to a new page.
     // eslint-disable-next-line react-hooks/set-state-in-effect, react-x/set-state-in-effect
     setShowNotesRefs((old) => {
       return old.size ? new Set() : old;
     });
+
+    // Stop reading aloud when navigated to a new page.
+    // eslint-disable-next-line react-x/set-state-in-effect
+    setIsSpeaking(false);
+    stopSpeaking();
   }, [abbr, ch]);
 
   if (!bookNames || !bookData || !strings) {
@@ -108,6 +120,8 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
       setShowNotesRefs={setShowNotesRefs}
       showSuperscripts={showSuperscripts}
       setShowSuperscripts={setShowSuperscripts}
+      isSpeaking={isSpeaking}
+      setIsSpeaking={setIsSpeaking}
     />
   );
 };
@@ -122,6 +136,8 @@ const ReadyAndValid: React.FC<{
   setShowNotesRefs: Dispatch<SetStateAction<Set<string>>>;
   showSuperscripts: boolean;
   setShowSuperscripts: Dispatch<SetStateAction<boolean>>;
+  isSpeaking: boolean;
+  setIsSpeaking: Dispatch<SetStateAction<boolean>>;
 }> = ({
   abbr,
   ch,
@@ -132,6 +148,8 @@ const ReadyAndValid: React.FC<{
   setShowNotesRefs,
   showSuperscripts,
   setShowSuperscripts,
+  isSpeaking,
+  setIsSpeaking,
 }) => {
   // altLocale data is optional to render the page (load async).
   const altLocale = useAltLocale();
@@ -183,7 +201,7 @@ const ReadyAndValid: React.FC<{
         return parseVerseText(s);
       }
 
-      return [s.replaceAll(/\[.*?\]/g, "")];
+      return [getVersePlainText(s)];
     }
 
     for (const [vref, vtext] of entries) {
@@ -284,6 +302,40 @@ const ReadyAndValid: React.FC<{
     });
   }, [allSupIds, setShowNotesRefs]);
 
+  const readAloud = useCallback(async () => {
+    setIsSpeaking(true);
+
+    try {
+      const chPrefix = chStr + ":";
+      const entries = Object.entries(bookData.verses).filter(([k]) =>
+        k.startsWith(chPrefix),
+      );
+      const readableLines: TextOrAction[] = [];
+
+      for (const [vref, vtext] of entries) {
+        const vn = vref.slice(chPrefix.length);
+        const s =
+          strings.get("verseNumberForSpeaking", vn) +
+          " " +
+          getVersePlainText(vtext);
+
+        readableLines.push(() => {
+          // Highlight the line but don't focus. This allows the user to
+          // navigate anywhere in the page without interruptions.
+          glowOnce("v" + vn);
+        });
+
+        readableLines.push(s);
+      }
+
+      await speakLines(readableLines, () => {
+        setIsSpeaking(false);
+      });
+    } finally {
+      setIsSpeaking(false);
+    }
+  }, [bookData.verses, chStr, glowOnce, setIsSpeaking, strings]);
+
   const bkNames = bookNames[abbr];
 
   // Outlines at verse "-1" are for Psalm book titles.
@@ -364,6 +416,20 @@ const ReadyAndValid: React.FC<{
           {showSuperscripts
             ? strings.hideSuperscripts
             : strings.showSuperscripts}
+        </LinkButton>
+
+        <LinkButton
+          variant="outline"
+          to=""
+          onClick={() => {
+            if (isSpeaking) {
+              stopSpeaking();
+            } else {
+              void readAloud();
+            }
+          }}
+        >
+          {isSpeaking ? strings.stopReading : strings.readAloud}
         </LinkButton>
       </Group>
 
