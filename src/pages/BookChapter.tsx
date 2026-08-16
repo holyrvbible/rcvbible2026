@@ -15,10 +15,9 @@ import { useStrings, type StringsResult } from "../data/useStrings";
 import { useBookData } from "../data/useBookData";
 import { useBookNames } from "../data/useBookNames";
 import { VerseLinks } from "../components/VerseLinks";
-import { Center, Checkbox, Collapse, Group, Space, Stack } from "@mantine/core";
+import { Center, Collapse, Group, Space, Stack } from "@mantine/core";
 import { BookTopBar } from "../components/BookTopBar";
 import { FadeLine } from "../components/FadeLine";
-import { useShowAllNotes } from "../utils/useShowAllNotes";
 import type { BookData, NotesRefsItem, OutlineItem } from "../data/booksTypes";
 import { LinkButton } from "../components/LinkButton";
 import { jumpToElement, scrollToTop } from "../utils/scrollToElement";
@@ -80,10 +79,17 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
   const bookData = useBookData(locale, abbr);
   const strings = useStrings();
 
-  const [showAllNotes, setShowAllNotes] = useShowAllNotes();
   const [showNotesRefs, setShowNotesRefs] = useState<Set<string>>(
     () => new Set(),
   );
+
+  // Hide all sups when navigated to a new page.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect, react-x/set-state-in-effect
+    setShowNotesRefs((old) => {
+      return old.size ? new Set() : old;
+    });
+  }, [abbr, ch]);
 
   if (!bookNames || !bookData || !strings) {
     return <PageSpinner />;
@@ -96,8 +102,6 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
       bookNames={bookNames}
       bookData={bookData}
       strings={strings}
-      showAllNotes={showAllNotes}
-      setShowAllNotes={setShowAllNotes}
       showNotesRefs={showNotesRefs}
       setShowNotesRefs={setShowNotesRefs}
     />
@@ -110,8 +114,6 @@ const ReadyAndValid: React.FC<{
   bookNames: LocaleBookNames;
   bookData: BookData;
   strings: StringsResult;
-  showAllNotes: boolean;
-  setShowAllNotes: Dispatch<SetStateAction<boolean>>;
   showNotesRefs: Set<string>;
   setShowNotesRefs: Dispatch<SetStateAction<Set<string>>>;
 }> = ({
@@ -120,8 +122,6 @@ const ReadyAndValid: React.FC<{
   bookNames,
   bookData,
   strings,
-  showAllNotes,
-  setShowAllNotes,
   showNotesRefs,
   setShowNotesRefs,
 }) => {
@@ -249,14 +249,16 @@ const ReadyAndValid: React.FC<{
   }, [bookData.chTitleNote, ch, chVerses]);
 
   const onShowAllNotesRefsClick = useCallback(() => {
-    setShowAllNotes((v) => !v);
-
-    if (showAllNotes) {
-      setShowNotesRefs(new Set());
-    } else {
-      setShowNotesRefs(new Set(allSupIds));
-    }
-  }, [allSupIds, setShowAllNotes, setShowNotesRefs, showAllNotes]);
+    setShowNotesRefs((old) => {
+      const newSet = new Set<string>();
+      for (const supId of allSupIds) {
+        if (!old.has(supId)) {
+          newSet.add(supId);
+        }
+      }
+      return newSet;
+    });
+  }, [allSupIds, setShowNotesRefs]);
 
   const bkNames = bookNames[abbr];
 
@@ -324,21 +326,12 @@ const ReadyAndValid: React.FC<{
       <Space h={10} />
 
       <Center>
-        <LinkButton to="" onClick={onShowAllNotesRefsClick}>
-          <Checkbox
-            checked={showAllNotes}
-            onClick={(e) => {
-              // e.preventDefault(); --> will cause this to not work
-              e.stopPropagation();
-              onShowAllNotesRefsClick();
-            }}
-            styles={{
-              input: {
-                cursor: "pointer",
-              },
-            }}
-          />
-          &nbsp; {strings.showAllNotes}
+        <LinkButton
+          to=""
+          onClick={onShowAllNotesRefsClick}
+          style={{ borderColor: "rgb(202, 210, 243)" }}
+        >
+          {strings.toggleAllNotes}
         </LinkButton>
       </Center>
 

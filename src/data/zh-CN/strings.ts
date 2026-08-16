@@ -20,7 +20,7 @@ export const strings: StringsData = {
   overview: "概览",
   backToTop: "回到顶部",
   jumpToVerse: "跳转到经节",
-  showAllNotes: "显示所有注解",
+  toggleAllNotes: "切换所有注解",
   zoomIn: "放大",
   zoomOut: "缩小",
   resetZoom: "重置缩放",

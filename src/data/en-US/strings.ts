@@ -18,7 +18,7 @@ export const strings = {
   overview: "Overview",
   backToTop: "Back to Top",
   jumpToVerse: "Jump to Verse",
-  showAllNotes: "Show All Notes",
+  toggleAllNotes: "Toggle All Notes",
   zoomIn: "Zoom in",
   zoomOut: "Zoom out",
   resetZoom: "Reset zoom",
