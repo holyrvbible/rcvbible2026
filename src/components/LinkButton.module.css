@@ -33,3 +33,7 @@
   background-color: #ccffcc;
   border-color: #ccc;
 }
+
+.button.outline {
+  border-color: rgb(202, 210, 243);
+}

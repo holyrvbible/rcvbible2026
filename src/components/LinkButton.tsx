@@ -2,7 +2,7 @@ import styles from "./LinkButton.module.css";
 import clsx from "clsx";
 import { Link as RouterLink } from "react-router";
 
-export type LinkButtonVariant = "transparent" | "green";
+export type LinkButtonVariant = "transparent" | "green" | "outline";
 
 export const LinkButton: React.FC<
   Parameters<typeof RouterLink>[0] & { variant?: LinkButtonVariant }

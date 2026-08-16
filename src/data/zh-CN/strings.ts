@@ -21,6 +21,8 @@ export const strings: StringsData = {
   backToTop: "回到顶部",
   jumpToVerse: "跳转到经节",
   toggleAllNotes: "切换所有注解",
+  showSuperscripts: "显示上标",
+  hideSuperscripts: "隐藏上标",
   zoomIn: "放大",
   zoomOut: "缩小",
   resetZoom: "重置缩放",

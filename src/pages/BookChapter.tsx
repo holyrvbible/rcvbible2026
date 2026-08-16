@@ -83,6 +83,8 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
     () => new Set(),
   );
 
+  const [showSuperscripts, setShowSuperscripts] = useState(true);
+
   // Hide all sups when navigated to a new page.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect, react-x/set-state-in-effect
@@ -104,6 +106,8 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
       strings={strings}
       showNotesRefs={showNotesRefs}
       setShowNotesRefs={setShowNotesRefs}
+      showSuperscripts={showSuperscripts}
+      setShowSuperscripts={setShowSuperscripts}
     />
   );
 };
@@ -116,6 +120,8 @@ const ReadyAndValid: React.FC<{
   strings: StringsResult;
   showNotesRefs: Set<string>;
   setShowNotesRefs: Dispatch<SetStateAction<Set<string>>>;
+  showSuperscripts: boolean;
+  setShowSuperscripts: Dispatch<SetStateAction<boolean>>;
 }> = ({
   abbr,
   ch,
@@ -124,6 +130,8 @@ const ReadyAndValid: React.FC<{
   strings,
   showNotesRefs,
   setShowNotesRefs,
+  showSuperscripts,
+  setShowSuperscripts,
 }) => {
   // altLocale data is optional to render the page (load async).
   const altLocale = useAltLocale();
@@ -170,18 +178,34 @@ const ReadyAndValid: React.FC<{
       partAOrB?: "a" | "b";
     }[] = [];
 
+    function getVtextWithSups(s: string): VtextWithSups {
+      if (showSuperscripts) {
+        return parseVerseText(s);
+      }
+
+      return [s.replaceAll(/\[.*?\]/g, "")];
+    }
+
     for (const [vref, vtext] of entries) {
       if (vtext.includes(VERSE_SPLIT_SEPARATOR)) {
         const [a, b] = vtext.split(VERSE_SPLIT_SEPARATOR);
-        results.push({ vref, vtextWithSups: parseVerseText(a), partAOrB: "a" });
-        results.push({ vref, vtextWithSups: parseVerseText(b), partAOrB: "b" });
+        results.push({
+          vref,
+          vtextWithSups: getVtextWithSups(a),
+          partAOrB: "a",
+        });
+        results.push({
+          vref,
+          vtextWithSups: getVtextWithSups(b),
+          partAOrB: "b",
+        });
       } else {
-        results.push({ vref, vtextWithSups: parseVerseText(vtext) });
+        results.push({ vref, vtextWithSups: getVtextWithSups(vtext) });
       }
     }
 
     return results;
-  }, [bookData.verses, chStr]);
+  }, [bookData.verses, chStr, showSuperscripts]);
 
   const onVrefClick = useCallback(
     (vn: string, notesRefsItems: NotesRefsItem[] | undefined) => {
@@ -325,15 +349,23 @@ const ReadyAndValid: React.FC<{
 
       <Space h={10} />
 
-      <Center>
-        <LinkButton
-          to=""
-          onClick={onShowAllNotesRefsClick}
-          style={{ borderColor: "rgb(202, 210, 243)" }}
-        >
+      <Group gap={8} justify="center">
+        <LinkButton variant="outline" to="" onClick={onShowAllNotesRefsClick}>
           {strings.toggleAllNotes}
         </LinkButton>
-      </Center>
+
+        <LinkButton
+          variant="outline"
+          to=""
+          onClick={() => {
+            setShowSuperscripts((v) => !v);
+          }}
+        >
+          {showSuperscripts
+            ? strings.hideSuperscripts
+            : strings.showSuperscripts}
+        </LinkButton>
+      </Group>
 
       <Space h={30} />
 

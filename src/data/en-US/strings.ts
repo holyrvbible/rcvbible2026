@@ -19,6 +19,8 @@ export const strings = {
   backToTop: "Back to Top",
   jumpToVerse: "Jump to Verse",
   toggleAllNotes: "Toggle All Notes",
+  showSuperscripts: "Show Superscripts",
+  hideSuperscripts: "Hide Superscripts",
   zoomIn: "Zoom in",
   zoomOut: "Zoom out",
   resetZoom: "Reset zoom",
