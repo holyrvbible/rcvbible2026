@@ -47,7 +47,8 @@ export const NotesRefsBlock: React.FC<{
       style={{
         border: anyExpanded ? "1px solid rgb(221, 221, 221)" : "none",
         borderRadius: 12,
-        backgroundColor: "rgb(250, 255, 250)",
+        // Make sure the bar doesn't show up under the top bar shadow.
+        backgroundColor: anyExpanded ? "rgb(250, 255, 250)" : "transparent",
         color: "rgb(85, 85, 85)",
         padding: "2px 10px 6px",
         margin: anyExpanded ? "4px 0" : 0,

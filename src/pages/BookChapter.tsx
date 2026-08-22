@@ -363,7 +363,7 @@ const ReadyAndValid: React.FC<{
     | undefined;
 
   return (
-    <Stack gap={0} flex={1}>
+    <Stack gap={0} flex={1} mt={12}>
       <BookTopBar abbr={abbr} />
 
       <Group

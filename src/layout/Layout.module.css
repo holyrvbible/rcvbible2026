@@ -8,10 +8,9 @@
 
 .topBar {
   flex-shrink: 0;
-  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.3);
-  /* Important: Make a top space so that when we jump to a target, the target
-     is not pressed hard to the bottom of the bar. */
-  margin-bottom: 12px;
+  box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.3);
+  /* Ensure the <main> content doesn't show above the shadow. */
+  z-index: 1;
 }
 
 .content {

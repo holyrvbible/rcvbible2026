@@ -25,7 +25,7 @@ export function jumpToElement(
       // A slight delay (e.g., 100ms) can help in more complex scenarios
       // where sub-components are still rendering.
       setTimeout(() => {
-        element?.scrollIntoView({ block: "start" });
+        if (element) scrollToElementWithOffset(element);
         glowOnce?.(id);
       }, 100);
       return true;
@@ -36,7 +36,7 @@ export function jumpToElement(
       // A slight delay (e.g., 100ms) can help in more complex scenarios
       // where sub-components are still rendering.
       setTimeout(() => {
-        element.scrollIntoView({ block: "start" });
+        scrollToElementWithOffset(element);
         glowOnce?.(id);
       }, 100);
       return true;
@@ -49,4 +49,11 @@ export function jumpToElement(
 
   // Try again later just in case.
   setTimeout(() => tryJump(), 500);
+}
+
+function scrollToElementWithOffset(element: HTMLElement, offset = 10) {
+  const old = element.style.scrollMarginTop;
+  element.style.scrollMarginTop = String(offset) + "px";
+  element.scrollIntoView({ block: "start" });
+  element.style.scrollMarginTop = old;
 }
