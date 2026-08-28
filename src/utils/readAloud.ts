@@ -53,12 +53,17 @@ function resetCurrentSpeaking() {
   currentSpeaking.queue = [];
 }
 
+function sanitizeText(s: string): string {
+  // Cannot read smart quotes.
+  return s.replace(/’/g, "'");
+}
+
 /**
  * Speaks a single string with language detection.
  */
 export function speakText(text: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(sanitizeText(text));
 
     // Detect language and set appropriate voice
     const isChineseText = isChinese(text);
