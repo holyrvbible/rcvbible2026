@@ -55,7 +55,14 @@ function resetCurrentSpeaking() {
 
 function sanitizeText(s: string): string {
   // Cannot read HTML entities.
-  return s.replace(/&rsquo;/g, "’");
+  return s
+    .replace(/&lsquo;/g, "‘")
+    .replace(/&rsquo;/g, "’")
+    .replace(/&ldquo;/g, "“")
+    .replace(/&rdquo;/g, "”")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&ndash;/g, "–")
+    .replace(/&mdash;/g, "—");
 }
 
 /**
