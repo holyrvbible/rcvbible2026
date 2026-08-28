@@ -54,16 +54,18 @@ function resetCurrentSpeaking() {
 }
 
 function sanitizeText(s: string): string {
-  // Cannot read smart quotes.
-  return s.replace(/’/g, "'");
+  // Cannot read HTML entities.
+  return s.replace(/&rsquo;/g, "’");
 }
 
 /**
  * Speaks a single string with language detection.
  */
 export function speakText(text: string): Promise<void> {
+  text = sanitizeText(text);
+
   return new Promise((resolve, reject) => {
-    const utterance = new SpeechSynthesisUtterance(sanitizeText(text));
+    const utterance = new SpeechSynthesisUtterance(text);
 
     // Detect language and set appropriate voice
     const isChineseText = isChinese(text);
