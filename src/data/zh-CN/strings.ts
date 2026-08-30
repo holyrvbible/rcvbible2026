@@ -25,6 +25,8 @@ export const strings: StringsData = {
   hideSuperscripts: "隐藏上标",
   readAloud: "开始朗读",
   stopReading: "停止朗读",
+  pause: "暂停",
+  resume: "继续",
   verseNumberForSpeaking: "第{1}节。",
   zoomIn: "放大",
   zoomOut: "缩小",

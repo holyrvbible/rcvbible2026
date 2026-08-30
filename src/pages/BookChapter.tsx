@@ -5,8 +5,10 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
 } from "react";
 import { PageSpinner } from "../components/PageSpinner";
@@ -47,13 +49,10 @@ import { useSetDocumentTitle } from "../utils/useSetDocumentTitle";
 import { useRouteBkAbbr } from "../utils/useRouteBkAbbr";
 import { useRouteNumParam } from "../utils/useRouteNumParam";
 import { useGlowOnce } from "../utils/useGlowOnce";
-import {
-  speakLines,
-  stopSpeaking,
-  type TextOrAction,
-} from "../utils/readAloud";
+import { pauseBetweenLines, speakText, stopSpeaking } from "../utils/readAloud";
 import {
   IconNotes,
+  IconPlayerPauseFilled,
   IconPlayerPlay,
   IconPlayerStopFilled,
   IconTextSize,
@@ -99,6 +98,9 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
 
   const [showSuperscripts, setShowSuperscripts] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  // Allow user to check for cancellations.
+  const isSpeakingRef = useRef(false);
+  const [currentVerseBeingRead, setCurrentVerseBeingRead] = useState("");
 
   useEffect(() => {
     // Hide all sups when navigated to a new page.
@@ -110,8 +112,19 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
     // Stop reading aloud when navigated to a new page.
     // eslint-disable-next-line react-x/set-state-in-effect
     setIsSpeaking(false);
+    isSpeakingRef.current = false;
+    // eslint-disable-next-line react-x/set-state-in-effect
+    setCurrentVerseBeingRead("");
     stopSpeaking();
   }, [abbr, ch]);
+
+  // Keep the state and the ref in sync.
+  const onSetIsSpeaking = useCallback((value: SetStateAction<boolean>) => {
+    setIsSpeaking(value);
+
+    isSpeakingRef.current =
+      typeof value === "boolean" ? value : value(isSpeakingRef.current);
+  }, []);
 
   if (!bookNames || !bookData || !strings) {
     return <PageSpinner />;
@@ -129,7 +142,10 @@ const ParamsValid: React.FC<{ abbr: BkAbbr; ch: number }> = ({ abbr, ch }) => {
       showSuperscripts={showSuperscripts}
       setShowSuperscripts={setShowSuperscripts}
       isSpeaking={isSpeaking}
-      setIsSpeaking={setIsSpeaking}
+      setIsSpeaking={onSetIsSpeaking}
+      isSpeakingRef={isSpeakingRef}
+      currentVerseBeingRead={currentVerseBeingRead}
+      setCurrentVerseBeingRead={setCurrentVerseBeingRead}
     />
   );
 };
@@ -146,6 +162,9 @@ const ReadyAndValid: React.FC<{
   setShowSuperscripts: Dispatch<SetStateAction<boolean>>;
   isSpeaking: boolean;
   setIsSpeaking: Dispatch<SetStateAction<boolean>>;
+  isSpeakingRef: RefObject<boolean>;
+  currentVerseBeingRead: string;
+  setCurrentVerseBeingRead: Dispatch<SetStateAction<string>>;
 }> = ({
   abbr,
   ch,
@@ -158,6 +177,9 @@ const ReadyAndValid: React.FC<{
   setShowSuperscripts,
   isSpeaking,
   setIsSpeaking,
+  isSpeakingRef,
+  currentVerseBeingRead,
+  setCurrentVerseBeingRead,
 }) => {
   // altLocale data is optional to render the page (load async).
   const altLocale = useAltLocale();
@@ -310,10 +332,11 @@ const ReadyAndValid: React.FC<{
     });
   }, [allSupIds, setShowNotesRefs]);
 
-  const readAloud = useCallback(
+  const onReadAloud = useCallback(
     async (startVn?: string | number) => {
       const startVnNum = startVn ? Number(startVn) : 0;
 
+      stopSpeaking();
       setIsSpeaking(true);
 
       try {
@@ -321,8 +344,6 @@ const ReadyAndValid: React.FC<{
         const entries = Object.entries(bookData.verses).filter(([k]) =>
           k.startsWith(chPrefix),
         );
-        const readableLines: TextOrAction[] = [];
-
         for (const [vref, vtext] of entries) {
           const vn = vref.slice(chPrefix.length);
 
@@ -335,23 +356,43 @@ const ReadyAndValid: React.FC<{
             " " +
             getVersePlainText(vtext);
 
-          readableLines.push(() => {
-            // Highlight the line but don't focus. This allows the user to
-            // navigate anywhere in the page without interruptions.
-            glowOnce("v" + vn);
-          });
+          // Highlight the line but don't focus. This allows the user to
+          // navigate anywhere in the page without interruptions.
+          glowOnce("v" + vn);
 
-          readableLines.push(s);
+          console.log(`Speaking: ${s}`);
+
+          // Verse 1 doesn't need to be resumed.
+          if (vn !== "1") {
+            setCurrentVerseBeingRead(vn);
+          }
+
+          // Allow cancellation.
+          if (!isSpeakingRef.current) return;
+
+          await speakText(s);
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (!isSpeakingRef.current) return;
+
+          await pauseBetweenLines();
         }
 
-        await speakLines(readableLines, () => {
-          setIsSpeaking(false);
-        });
+        // Only clear the current verse after reading completed.
+        setCurrentVerseBeingRead("");
       } finally {
         setIsSpeaking(false);
       }
     },
-    [bookData.verses, chStr, glowOnce, setIsSpeaking, strings],
+    [
+      bookData.verses,
+      chStr,
+      glowOnce,
+      isSpeakingRef,
+      setCurrentVerseBeingRead,
+      setIsSpeaking,
+      strings,
+    ],
   );
 
   const bkNames = bookNames[abbr];
@@ -450,8 +491,9 @@ const ReadyAndValid: React.FC<{
           onClick={() => {
             if (isSpeaking) {
               stopSpeaking();
+              setIsSpeaking(false);
             } else {
-              void readAloud();
+              void onReadAloud();
             }
           }}
         >
@@ -463,6 +505,30 @@ const ReadyAndValid: React.FC<{
           &nbsp;
           {isSpeaking ? strings.stopReading : strings.readAloud}
         </LinkButton>
+
+        {currentVerseBeingRead ? (
+          <LinkButton
+            variant="outline"
+            to=""
+            onClick={() => {
+              if (isSpeaking) {
+                stopSpeaking();
+                setIsSpeaking(false);
+              } else {
+                void onReadAloud(currentVerseBeingRead);
+              }
+            }}
+          >
+            {isSpeaking ? (
+              <IconPlayerPauseFilled size={BUTTON_ICON_SIZE} />
+            ) : (
+              <IconPlayerPlay size={BUTTON_ICON_SIZE} />
+            )}
+            &nbsp;
+            {isSpeaking ? strings.pause : strings.resume}{" "}
+            {currentVerseBeingRead}
+          </LinkButton>
+        ) : null}
       </Group>
 
       <Space h={30} />
@@ -572,7 +638,7 @@ const ReadyAndValid: React.FC<{
                   stopSpeaking();
                   setIsSpeaking(false);
                 } else {
-                  void readAloud(vn);
+                  void onReadAloud(vn);
                 }
               }}
             />

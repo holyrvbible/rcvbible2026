@@ -41,18 +41,6 @@ function getVoiceForLanguage(
   return voice;
 }
 
-export type TextOrAction = string | (() => void);
-
-const currentSpeaking = {
-  cancel: null as (() => void) | null,
-  queue: [] as TextOrAction[],
-};
-
-function resetCurrentSpeaking() {
-  currentSpeaking.cancel = null;
-  currentSpeaking.queue = [];
-}
-
 function sanitizeText(s: string): string {
   // Cannot read HTML entities.
   return s
@@ -100,61 +88,10 @@ export function speakText(text: string): Promise<void> {
   });
 }
 
-/**
- * Reads all strings in the array sequentially.
- */
-export async function speakLines(
-  textOrActions: TextOrAction[],
-  onCancel?: () => void,
-): Promise<void> {
-  stopSpeaking();
-
-  const canceled = [false];
-
-  currentSpeaking.cancel = () => {
-    canceled[0] = true;
-    onCancel?.();
-  };
-  currentSpeaking.queue = [...textOrActions];
-
-  try {
-    // Read each line sequentially
-    for (let i = 0; i < currentSpeaking.queue.length; i++) {
-      const text = currentSpeaking.queue[i];
-
-      // If given an action, execute without any delays.
-      if (typeof text === "function") {
-        text();
-        continue;
-      }
-
-      // Skip empty strings.
-      if (!text || text.trim() === "") {
-        continue;
-      }
-
-      if (canceled[0]) break;
-
-      console.log(
-        `Reading line ${String(i + 1)}/${String(currentSpeaking.queue.length)}: "${text}"`,
-      );
-
-      await speakText(text);
-
-      if (canceled[0]) break;
-
-      // Small pause between lines.
-      if (i < currentSpeaking.queue.length - 1) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      }
-    }
-  } finally {
-    resetCurrentSpeaking();
-  }
+export async function pauseBetweenLines() {
+  await new Promise((resolve) => setTimeout(resolve, 200));
 }
 
 export function stopSpeaking() {
   speechSynthesis.cancel();
-  currentSpeaking.cancel?.();
-  resetCurrentSpeaking();
 }

@@ -23,6 +23,8 @@ export const strings = {
   hideSuperscripts: "Hide Superscripts",
   readAloud: "Read Aloud",
   stopReading: "Stop Reading",
+  pause: "Pause",
+  resume: "Resume",
   verseNumberForSpeaking: "Verse {1}.",
   zoomIn: "Zoom in",
   zoomOut: "Zoom out",
