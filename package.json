@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev?": "echo Dev build and serve from source code",
-    "dev": "vite",
+    "dev": "vite -- --skipSearchIndex",
+    "dev:idx": "vite",
     "lint": "time eslint --cache",
     "fix": "time eslint --fix --cache",
     "format": "time prettier --write .",

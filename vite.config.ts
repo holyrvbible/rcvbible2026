@@ -4,6 +4,14 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Build search index by default because that is a required step in the
+// production build. User may choose to skip this step from the command line.
+const skipSearchIndex = process.argv.includes("--skipSearchIndex");
+
+if (skipSearchIndex) {
+  console.log("Skip search index rebuild requested.");
+}
+
 function buildSearchIndex(): Plugin {
   return {
     name: "build-search-index",
@@ -27,7 +35,7 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
-    buildSearchIndex(),
+    ...(skipSearchIndex ? [] : [buildSearchIndex()]),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
