@@ -5,7 +5,9 @@ export function useGlowOnce() {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    const oldBgColor = element.style.backgroundColor;
+    const oldBgColor =
+      element.style.backgroundColor ||
+      getComputedStyle(element).backgroundColor;
 
     const keyframes = [
       { backgroundColor: oldBgColor, filter: "brightness(1)" },
