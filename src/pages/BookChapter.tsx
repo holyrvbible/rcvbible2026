@@ -363,7 +363,9 @@ const ReadyAndValid: React.FC<{
           console.log(`Speaking: ${s}`);
 
           // Verse 1 doesn't need to be resumed.
-          if (vn !== "1") {
+          if (vn === "1") {
+            setCurrentVerseBeingRead("");
+          } else {
             setCurrentVerseBeingRead(vn);
           }
 
@@ -505,31 +507,41 @@ const ReadyAndValid: React.FC<{
           &nbsp;
           {isSpeaking ? strings.stopReading : strings.readAloud}
         </LinkButton>
-
-        {currentVerseBeingRead ? (
-          <LinkButton
-            variant="outline"
-            to=""
-            onClick={() => {
-              if (isSpeaking) {
-                stopSpeaking();
-                setIsSpeaking(false);
-              } else {
-                void onReadAloud(currentVerseBeingRead);
-              }
-            }}
-          >
-            {isSpeaking ? (
-              <IconPlayerPauseFilled size={BUTTON_ICON_SIZE} />
-            ) : (
-              <IconPlayerPlay size={BUTTON_ICON_SIZE} />
-            )}
-            &nbsp;
-            {isSpeaking ? strings.pause : strings.resume}{" "}
-            {currentVerseBeingRead}
-          </LinkButton>
-        ) : null}
       </Group>
+
+      {currentVerseBeingRead ? (
+        <LinkButton
+          variant="outline"
+          to=""
+          onClick={() => {
+            if (isSpeaking) {
+              stopSpeaking();
+              setIsSpeaking(false);
+            } else {
+              void onReadAloud(currentVerseBeingRead);
+            }
+          }}
+          style={{
+            position: "fixed",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            backgroundColor: "#fff",
+            opacity: 1,
+            boxShadow:
+              "0 0 4px 0 #fff, 0 0 12px 12px rgba(255, 255, 255, 1), 0 0 10px 10px rgba(255, 255, 255, 0)",
+          }}
+        >
+          {isSpeaking ? (
+            <IconPlayerPauseFilled size={BUTTON_ICON_SIZE} />
+          ) : (
+            <IconPlayerPlay size={BUTTON_ICON_SIZE} />
+          )}
+          &nbsp;
+          {isSpeaking ? strings.pause : strings.resume} {currentVerseBeingRead}
+        </LinkButton>
+      ) : null}
 
       <Space h={30} />
 
