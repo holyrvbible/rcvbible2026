@@ -17,7 +17,14 @@ import { useStrings, type StringsResult } from "../data/useStrings";
 import { useBookData } from "../data/useBookData";
 import { useBookNames } from "../data/useBookNames";
 import { VerseLinks } from "../components/VerseLinks";
-import { Center, Collapse, Group, Space, Stack } from "@mantine/core";
+import {
+  ActionIcon,
+  Center,
+  Collapse,
+  Group,
+  Space,
+  Stack,
+} from "@mantine/core";
 import { BookTopBar } from "../components/BookTopBar";
 import { FadeLine } from "../components/FadeLine";
 import type { BookData, NotesRefsItem, OutlineItem } from "../data/booksTypes";
@@ -56,6 +63,7 @@ import {
   IconPlayerPlay,
   IconPlayerStopFilled,
   IconTextSize,
+  IconX,
 } from "@tabler/icons-react";
 
 const BUTTON_ICON_SIZE = 18;
@@ -510,17 +518,7 @@ const ReadyAndValid: React.FC<{
       </Group>
 
       {currentVerseBeingRead ? (
-        <LinkButton
-          variant="outline"
-          to=""
-          onClick={() => {
-            if (isSpeaking) {
-              stopSpeaking();
-              setIsSpeaking(false);
-            } else {
-              void onReadAloud(currentVerseBeingRead);
-            }
-          }}
+        <div
           style={{
             position: "fixed",
             bottom: 24,
@@ -533,14 +531,42 @@ const ReadyAndValid: React.FC<{
               "0 0 4px 0 #fff, 0 0 12px 12px rgba(255, 255, 255, 1), 0 0 10px 10px rgba(255, 255, 255, 0)",
           }}
         >
-          {isSpeaking ? (
-            <IconPlayerPauseFilled size={BUTTON_ICON_SIZE} />
-          ) : (
-            <IconPlayerPlay size={BUTTON_ICON_SIZE} />
-          )}
-          &nbsp;
-          {isSpeaking ? strings.pause : strings.resume} {currentVerseBeingRead}
-        </LinkButton>
+          <Group gap={10}>
+            <LinkButton
+              variant="outline"
+              to=""
+              onClick={() => {
+                if (isSpeaking) {
+                  stopSpeaking();
+                  setIsSpeaking(false);
+                } else {
+                  void onReadAloud(currentVerseBeingRead);
+                }
+              }}
+            >
+              {isSpeaking ? (
+                <IconPlayerPauseFilled size={BUTTON_ICON_SIZE} />
+              ) : (
+                <IconPlayerPlay size={BUTTON_ICON_SIZE} />
+              )}
+              &nbsp;
+              {isSpeaking ? strings.pause : strings.resume}{" "}
+              {currentVerseBeingRead}
+              <Space w={2} />
+            </LinkButton>
+            <ActionIcon
+              size="sm"
+              variant="outline"
+              color="pink"
+              opacity={0.5}
+              onClick={() => {
+                setCurrentVerseBeingRead("");
+              }}
+            >
+              <IconX />
+            </ActionIcon>
+          </Group>
+        </div>
       ) : null}
 
       <Space h={30} />
