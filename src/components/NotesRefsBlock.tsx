@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
 import type { NotesRefsItem } from "../data/booksTypes";
-import { supId } from "../utils/links";
+import { getSupFromId, supId } from "../utils/links";
 import { Collapse, Space } from "@mantine/core";
 import { chColon, replaceHtmlEntities } from "../utils/verses";
 import { CodedVrefLinks } from "./CodedVrefLinks";
@@ -43,9 +43,10 @@ export const NotesRefsBlock: React.FC<{
       return true;
     }
 
-    if (id.length >= 2) {
-      const moreIds = id.split("");
-      return moreIds.some((id) => showNotesRefs.has(`${vn}^${id}`));
+    const supRef = getSupFromId(id);
+    if (supRef.length >= 2) {
+      const moreIds = supRef.split("");
+      return moreIds.some((id) => showNotesRefs.has(supId(vn, id)));
     }
 
     return false;
@@ -74,14 +75,14 @@ export const NotesRefsBlock: React.FC<{
 
         const isExpanded =
           showNotesRefs.has(id) ||
-          moreIds.some((id) => showNotesRefs.has(`${vn}^${id}`));
+          moreIds.some((id) => showNotesRefs.has(supId(vn, id)));
 
         return (
           <Fragment key={sup}>
             <Collapse expanded={isExpanded}>
               <div id={id}>
                 {moreIds.map((id2) => (
-                  <span key={id2} id={`${vn}^${id2}`} data-aliasForId={id} />
+                  <span key={id2} id={supId(vn, id2)} data-aliasForId={id} />
                 ))}
                 <SmoothTooltip label={strings?.hideThisNote ?? ""}>
                   <LinkButton

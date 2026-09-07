@@ -15,7 +15,7 @@ export function linkTo(
 
   if (!vn) return href;
 
-  href += `#${String(vn)}`;
+  href += `#v${String(vn)}`;
 
   if (!refOrNote) return href;
 
@@ -32,7 +32,11 @@ export function vLink(
 }
 
 export function supId(vn: string | number, sup: string | number): string {
-  return `${String(vn)}^${String(sup)}`;
+  return `v${String(vn)}^${String(sup)}`;
+}
+
+export function getSupFromId(id: string): string {
+  return id.slice(1); // remove 'v' prefix
 }
 
 /** For links within the same page only. */
