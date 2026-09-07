@@ -15,7 +15,7 @@ export function linkTo(
 
   if (!vn) return href;
 
-  href += `#v${String(vn)}`;
+  href += `#${String(vn)}`;
 
   if (!refOrNote) return href;
 

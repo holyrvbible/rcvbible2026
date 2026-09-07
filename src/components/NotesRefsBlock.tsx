@@ -39,7 +39,16 @@ export const NotesRefsBlock: React.FC<{
 
   const anyExpanded = notesRefsItems.some(({ sup }) => {
     const id = supId(vn, sup);
-    return showNotesRefs.has(id);
+    if (showNotesRefs.has(id)) {
+      return true;
+    }
+
+    if (id.length >= 2) {
+      const moreIds = id.split("");
+      return moreIds.some((id) => showNotesRefs.has(`${vn}^${id}`));
+    }
+
+    return false;
   });
 
   return (
@@ -63,12 +72,16 @@ export const NotesRefsBlock: React.FC<{
         const supStr = String(sup);
         const moreIds = supStr.length >= 2 ? supStr.split("") : [];
 
+        const isExpanded =
+          showNotesRefs.has(id) ||
+          moreIds.some((id) => showNotesRefs.has(`${vn}^${id}`));
+
         return (
           <Fragment key={sup}>
-            <Collapse expanded={showNotesRefs.has(id)}>
+            <Collapse expanded={isExpanded}>
               <div id={id}>
-                {moreIds.map((id) => (
-                  <span key={id} id={id} />
+                {moreIds.map((id2) => (
+                  <span key={id2} id={`${vn}^${id2}`} data-aliasForId={id} />
                 ))}
                 <SmoothTooltip label={strings?.hideThisNote ?? ""}>
                   <LinkButton

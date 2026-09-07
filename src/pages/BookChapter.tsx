@@ -207,13 +207,18 @@ const ReadyAndValid: React.FC<{
 
   useSetDocumentTitle(bookNames[abbr].full + " " + chStr);
 
-  // Remove the '#v' prefix.
-  const hashSupId = hash.includes("^") ? hash.slice(2) : "";
+  // Remove the '#' prefix.
+  const hashSupId = hash.includes("^") ? hash.slice(1) : "";
 
+  // Auto-open note or ref being navigated to.
   useEffect(() => {
     if (!hashSupId) return;
 
     setShowNotesRefs((old) => {
+      if (old.has(hashSupId)) {
+        return old;
+      }
+
       const newState = new Set(old);
       newState.add(hashSupId);
       return newState;

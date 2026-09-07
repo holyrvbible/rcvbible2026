@@ -2,8 +2,15 @@ import { useCallback } from "react";
 
 export function useGlowOnce() {
   const glowOnce = useCallback((elementId: string, duration = 2000) => {
-    const element = document.getElementById(elementId);
+    let element = document.getElementById(elementId);
     if (!element) return;
+
+    // Allow elements to point to their real target elements.
+    const aliasForId = element.getAttribute("data-aliasForId");
+    if (aliasForId) {
+      const e = document.getElementById(aliasForId);
+      if (e) element = e;
+    }
 
     const oldBgColor =
       element.style.backgroundColor ||
