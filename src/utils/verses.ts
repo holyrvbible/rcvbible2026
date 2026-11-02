@@ -346,7 +346,7 @@ export function parseVerseText(text: string): VtextWithSups {
   const a: VtextWithSups = [];
 
   while (remaining) {
-    const match = /\[([^\]]+)\]([^\s.,;&<。，；-]*)/.exec(remaining);
+    const match = /\[([^\]]+)\]([^\s[.,;&<。，；-]*)/.exec(remaining);
     if (!match) {
       a.push(remaining);
       return a;
